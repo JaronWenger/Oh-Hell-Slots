@@ -1,6 +1,10 @@
 var round = 1;
 var points = 0;
+var cpuPoints = 0;
+var cpuBidTracker = 0;
+var trump = false;
 var playerOnesTurn = false;
+
 
 ///Spades
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
@@ -106,25 +110,31 @@ function cpuBet() {
   const index = suit.indexOf(cCard);
 
   if (tSuit === cSuit) {
+    trump = true
     if (index > 0){
 /////Bid 1
       cpuBet.innerHTML = "1";
       cpuBet.style.opacity = "100%";
+      cpuBidTracker = 1
     }else{
 ////Bid 0      
       cpuBet.innerHTML = "0";
       cpuBet.style.opacity = "100%";
+      cpuBidTracker = 0
     }
 
   } else {
+    trump = false
     if (index > 9){
       /////Bid 1
             cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
+            cpuBidTracker = 1
           }else{
       ////Bid 0      
             cpuBet.innerHTML = "0";
             cpuBet.style.opacity = "100%";
+            cpuBidTracker = 0
           }
   }
 }
@@ -311,43 +321,60 @@ function playRound(bid) {
     var tIndex = trumpSuit.indexOf(trumpCard)
 
     if (pSuit === tSuit && cSuit !== tSuit){
+      trump = false
       ///player wins hand
       winScore(bid)
+      cpuLoseScore(cIndex)
 
     } else if (pSuit === tSuit && cSuit === tSuit) {
+      trump = true
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuLoseScore(cIndex)
       } else {
         ///computer wins hand
         loseScore(bid)
+        cpuWinScore(cIndex)
       }
     
 
     } else if (pSuit !== tSuit && cSuit === tSuit){
+      trump = true
       ///computer wins hand
       loseScore(bid)
+      cpuWinScore(cIndex)
     } else if (playerOnesTurn && pSuit !== cSuit){
+      trump = false
       ///Player wins hand
       winScore(bid)
+      cpuLoseScore(cIndex)
     } else if (!playerOnesTurn && pSuit !== cSuit){
+      trump = false
       ///computer wins hand
       loseScore(bid)
+      cpuWinScore(cIndex)
     } else if (playerOnesTurn && pSuit === cSuit){
+      trump = true
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuLoseScore(cIndex)
       }else{
         ///computer wins hand
         loseScore(bid)
+        cpuWinScore(cIndex)
       }
     } else if (!playerOnesTurn && pSuit === cSuit){
+      trump = true
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuLoseScore(cIndex)
       } else {
         ///computer wins hand
         loseScore(bid)
+        cpuWinScore(cIndex)
       }
     }
 
@@ -359,11 +386,11 @@ function winScore(bid) {
   if (bid === 1){
     points = points + 11;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("POINTS: " + points);
+    scoreHeading.innerHTML = ("MEGAN: " + points);
   } else if (bid === 0) {
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("POINTS: " + points);
+    scoreHeading.innerHTML = ("MEGAN: " + points);
   }
 }
 
@@ -371,11 +398,77 @@ function loseScore(bid) {
   if (bid === 1){
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("POINTS: " + points);
+    scoreHeading.innerHTML = ("MEGAN: " + points);
   } else if (bid === 0){
     points = points + 10;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("POINTS: " + points);
+    scoreHeading.innerHTML = ("MEGAN: " + points);
+  }
+}
+
+///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
+function cpuWinScore(cIndex) {
+  var cpuBet = document.getElementById('cpuBid');
+  if (playerOnesTurn && trump){
+    cpuBidTracker = 1
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+  } else if (playerOnesTurn && !trump){
+    if (cIndex > 10){
+      cpuBidTracker = 1
+      cpuBet.innerHTML = "1";
+      cpuBet.style.opacity = "100%";
+    } else {
+      cpuBidTracker = 0
+      cpuBet.innerHTML = "0";
+      cpuBet.style.opacity = "100%";
+    }
+  }
+
+
+  
+
+  if (cpuBidTracker === 1){
+    cpuPoints = cpuPoints + 11;
+    var scoreHeading = document.getElementById("cpuPoints");
+    scoreHeading.innerHTML = ("JARON: " + cpuPoints);
+  } else if (cpuBidTracker === 0) {
+    cpuPoints = cpuPoints - 1;
+    var scoreHeading = document.getElementById("cpuPoints");
+    scoreHeading.innerHTML = ("JARON: " + cpuPoints);
+  }
+}
+
+///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
+function cpuLoseScore(cIndex) {
+  var cpuBet = document.getElementById('cpuBid');
+  if (playerOnesTurn && trump){
+    cpuBidTracker = 1
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+  } else if (playerOnesTurn && !trump){
+    if (cIndex > 10){
+      cpuBidTracker = 1
+      cpuBet.innerHTML = "1";
+      cpuBet.style.opacity = "100%";
+    } else {
+      cpuBidTracker = 0
+      cpuBet.innerHTML = "0";
+      cpuBet.style.opacity = "100%";
+    }
+  }
+
+
+
+
+  if (cpuBidTracker === 1){
+    cpuPoints = cpuPoints - 1;
+    var cpuScoreHeading = document.getElementById("cpuPoints");
+    cpuScoreHeading.innerHTML = ("JARON: " + cpuPoints);
+  } else if (cpuBidTracker === 0){
+    cpuPoints = cpuPoints + 10;
+    var cpuScoreHeading = document.getElementById("cpuPoints");
+    cpuScoreHeading.innerHTML = ("JARON: " + cpuPoints);
   }
 }
 

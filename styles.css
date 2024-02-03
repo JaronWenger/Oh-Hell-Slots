@@ -21,6 +21,11 @@ body {
   top: 80px;
   left: 100px;
 }
+#cpuPoints {
+  position: absolute;
+  top: 80px;
+  left: 300px;
+}
 
 
 #cpuBid {
