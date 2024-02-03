@@ -1,27 +1,47 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Up and Down the River</title>
+  <title>Poker Table</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Up and Down the River</h1>
-  <button id="startBtn">Start Game</button>
-  <div id="gameArea" style="display: none;">
-    <div id="playerHand"></div>
-    <div id="cpu1Hand"></div>
-    <div id="cpu2Hand"></div>
-    <div id="cpu3Hand"></div>
-    <button id="playBtn" onclick="playRound()">Play Round</button>
+  
+  <div class="player-spot">
+
+    <div class="player-hand">
+    <img class="player-card" src="./images/PNG-cards-1.3/ace_of_spades2.png" alt="Description of the image">
+    </div>
+
+  </div>
+  <div class="table">
+    <div class="wood-trim"></div>
+    <div class="gold-trim"></div>
+    <div class="rectangle-table"></div>
+    <!-- New buttons added -->
+    <h2 class="bid">BID:</h2>
+    <h2 class="trump-title">TRUMP:</h2>
+    <div class="trump">
+      <img class="player-card" src="./images/PNG-cards-1.3/ace_of_hearts.png" alt="Description of the image">
+    </div>
+    <button class="square-button button-left">0</button>
+    <button class="square-button button-right">1</button>
   </div>
 
 
 
 
+  <div class="computer-spot"></div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="index.js" charset="utf-8"></script>
+  <div class="computer-hand">
+    <img class="computer-card" src="./images/bike.png" alt="Description of the image">
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="index.js" charset="utf-8"></script>
 </body>
 </html>
