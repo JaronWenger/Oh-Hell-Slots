@@ -133,7 +133,7 @@ function cpuBet() {
 
   } else {
     trump = false
-    if (index > 9){
+    if (index > 6){
       /////Bid 1
             cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
@@ -323,7 +323,10 @@ function playRound(bid) {
     }
 
 
-    ///////////////////winning the trick
+
+
+
+    ///////////////////winning or losing the trick
     var pIndex = playerSuit.indexOf(playerCard)
     var cIndex = cpuSuit.indexOf(cpuCard)
     var tIndex = trumpSuit.indexOf(trumpCard)
@@ -332,6 +335,7 @@ function playRound(bid) {
       trump = false
       ///player wins hand
       winScore(bid)
+      cpuBetOnPlayerOnesTurn(cIndex)
       cpuLoseScore(cIndex)
 
     } else if (pSuit === tSuit && cSuit === tSuit) {
@@ -339,10 +343,12 @@ function playRound(bid) {
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuLoseScore(cIndex)
       } else {
         ///computer wins hand
         loseScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuWinScore(cIndex)
       }
     
@@ -351,37 +357,45 @@ function playRound(bid) {
       trump = true
       ///computer wins hand
       loseScore(bid)
+      cpuBetOnPlayerOnesTurn(cIndex)
       cpuWinScore(cIndex)
+
     } else if (playerOnesTurn && pSuit !== cSuit){
       trump = false
       ///Player wins hand
       winScore(bid)
+      cpuBetOnPlayerOnesTurn(cIndex)
       cpuLoseScore(cIndex)
     } else if (!playerOnesTurn && pSuit !== cSuit){
       trump = false
       ///computer wins hand
       loseScore(bid)
+      cpuBetOnPlayerOnesTurn(cIndex)
       cpuWinScore(cIndex)
     } else if (playerOnesTurn && pSuit === cSuit){
-      trump = true
+      trump = false
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuLoseScore(cIndex)
       }else{
         ///computer wins hand
         loseScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuWinScore(cIndex)
       }
     } else if (!playerOnesTurn && pSuit === cSuit){
-      trump = true
+      trump = false
       if (pIndex > cIndex){
         ///player wins hand
         winScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuLoseScore(cIndex)
       } else {
         ///computer wins hand
         loseScore(bid)
+        cpuBetOnPlayerOnesTurn(cIndex)
         cpuWinScore(cIndex)
       }
     }
@@ -416,22 +430,7 @@ function loseScore(bid) {
 
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
 function cpuWinScore(cIndex) {
-  var cpuBet = document.getElementById('cpuBid');
-  if (playerOnesTurn && trump){
-    cpuBidTracker = 1
-    cpuBet.innerHTML = "1";
-    cpuBet.style.opacity = "100%";
-  } else if (playerOnesTurn && !trump){
-    if (cIndex > 10){
-      cpuBidTracker = 1
-      cpuBet.innerHTML = "1";
-      cpuBet.style.opacity = "100%";
-    } else {
-      cpuBidTracker = 0
-      cpuBet.innerHTML = "0";
-      cpuBet.style.opacity = "100%";
-    }
-  }
+
 
 
   
@@ -449,22 +448,7 @@ function cpuWinScore(cIndex) {
 
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
 function cpuLoseScore(cIndex) {
-  var cpuBet = document.getElementById('cpuBid');
-  if (playerOnesTurn && trump){
-    cpuBidTracker = 1
-    cpuBet.innerHTML = "1";
-    cpuBet.style.opacity = "100%";
-  } else if (playerOnesTurn && !trump){
-    if (cIndex > 10){
-      cpuBidTracker = 1
-      cpuBet.innerHTML = "1";
-      cpuBet.style.opacity = "100%";
-    } else {
-      cpuBidTracker = 0
-      cpuBet.innerHTML = "0";
-      cpuBet.style.opacity = "100%";
-    }
-  }
+
 
 
 
@@ -488,6 +472,30 @@ function cpuLoseScore(cIndex) {
 
 
 
+
+
+
+function cpuBetOnPlayerOnesTurn(cIndex){
+///////////////////////////playeronesTurn//////establish cpu bet////////
+var cpuBet = document.getElementById('cpuBid');
+
+if (playerOnesTurn && trump){
+  cpuBidTracker = 1
+  cpuBet.innerHTML = "1";
+  cpuBet.style.opacity = "100%";
+} else if (playerOnesTurn && !trump){
+  if (cIndex > 10){
+    cpuBidTracker = 1
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+  } else {
+    cpuBidTracker = 0
+    cpuBet.innerHTML = "0";
+    cpuBet.style.opacity = "100%";
+  }
+}
+
+}
 
 
 
