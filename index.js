@@ -1,4 +1,7 @@
 var round = 1;
+var points = 0;
+
+///Spades
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
 
 ///Clubs
@@ -58,6 +61,8 @@ if (randomLead === 0) {
   pLead.style.width = "20px";
 }
 }
+
+
 
 function cpuBet() {
   const tCard = shuffledDeck[2];
@@ -120,6 +125,8 @@ function cpuBet() {
           }
   }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -149,6 +156,8 @@ function trumpDeal() {
       trumpElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[2];
     }
 }
+
+
 
 
 /////////////////////TRUMP CARD PRESSED/////////////////////////
@@ -223,17 +232,92 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////       PLAY BALL         ////////////////////////////////////////////////////////////////////////////////
 function playRound(bid) {
   
-  var cpuCard = document.getElementById('computer-card');
+  var cpuCardElement = document.getElementById('computer-card');
+  cpuCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[1];
 
-  if (cpuCard) {
-    // Get a random index from the array
-    var randomIndex = Math.floor(Math.random() * shuffledDeck.length);
+  const playerCard = shuffledDeck[0];
+  const trumpCard = shuffledDeck[2];
+  const cpuCard = shuffledDeck[1];
 
-    // Set the image source to the randomly chosen image path
-    cpuCard.src = "./images/PNG-cards-1.3/" + shuffledDeck[1];
+  // Establish trump Suit
+  let tSuit;
+  let trumpSuit;
+  if (Spades.includes(trumpCard)) {
+    tSuit = "S";
+    trumpSuit = Spades
+  } else if (Clubs.includes(trumpCard)) {
+    tSuit = "C";
+    trumpSuit = Clubs
+  } else if (Hearts.includes(trumpCard)) {
+    tSuit = "H";
+    trumpSuit = Hearts
+  } else if (Diamonds.includes(trumpCard)) {
+    tSuit = "D";
+    trumpSuit = Diamonds
   }
+
+  // Establish cpu Suit
+  let cSuit;
+  let cpuSuit;
+  if (Spades.includes(cpuCard)) {
+    cSuit = "S";
+    cpuSuit = Spades
+  } else if (Clubs.includes(cpuCard)) {
+    cSuit = "C";
+    cpuSuit = Clubs
+  } else if (Hearts.includes(cpuCard)) {
+    cSuit = "H";
+    cpuSuit = Hearts
+  } else if (Diamonds.includes(cpuCard)) {
+    cSuit = "D";
+    cpuSuit = Diamonds
+  }
+
+    // Establish player Suit
+    let pSuit;
+    let playerSuit;
+    if (Spades.includes(playerCard)) {
+      pSuit = "S";
+      playerSuit = Spades
+    } else if (Clubs.includes(playerCard)) {
+      pSuit = "C";
+      playerSuit = Clubs
+    } else if (Hearts.includes(playerCard)) {
+      pSuit = "H";
+      playerSuit = Hearts
+    } else if (Diamonds.includes(playerCard)) {
+      pSuit = "D";
+      playerSuit = Diamonds
+    }
+
+
+    ///////////////////winning the trick
+    var pIndex = playerSuit.indexOf(playerCard)
+    var cIndex = cpuSuit.indexOf(cpuCard)
+    var tIndex = trumpSuit.indexOf(trumpCard)
+
+    if (pSuit === tSuit && cSuit !== tSuit){
+      ///player wins hand
+      alert("you have trump, you win")
+
+    } else if (pSuit === tSuit && cSuit === tSuit) {
+      if (pIndex > cIndex){
+        ///player wins hand
+        alert("you have a higher trump")
+      } else {
+        ///computer wins hand
+        alert("i have a higher trump mother fucker!!!!1")
+      }
+    
+
+    }
+
 }
 
 
