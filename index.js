@@ -1,5 +1,6 @@
 var round = 1;
 var points = 0;
+var playerOnesTurn = false;
 
 ///Spades
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
@@ -34,11 +35,12 @@ function establishLead() {
 var randomLead = Math.floor(Math.random() * 2);
 
 if (randomLead === 0) {
-  ///change lead
+  ///change lead to player one
   var pLead = document.getElementById('pDot');
   pLead.style.backgroundColor = "rgb(0, 126, 40)";
   pLead.style.height = "60px";
   pLead.style.width = "60px";
+  playerOnesTurn = true;
   //reset oposite
   var cLead = document.getElementById('cDot');
   cLead.style.backgroundColor = "rgb(0, 0, 0)";
@@ -47,12 +49,13 @@ if (randomLead === 0) {
   cLead.style.top = "40px"
 
 }else if (randomLead === 1) {
-  //change lead
+  //change lead to computer
   var cLead = document.getElementById('cDot');
   cLead.style.backgroundColor = "rgb(0, 126, 40)";
   cLead.style.height = "60px";
   cLead.style.width = "60px";
   cLead.style.top = "25px";
+  playerOnesTurn = false;
   cpuBet()
   //reset oposite
   var pLead = document.getElementById('pDot');
@@ -161,6 +164,9 @@ function trumpDeal() {
 
 
 /////////////////////TRUMP CARD PRESSED/////////////////////////
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+
 function shuffleHands() {
   round++
 
@@ -229,6 +235,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+
 
 
 
@@ -304,23 +312,72 @@ function playRound(bid) {
 
     if (pSuit === tSuit && cSuit !== tSuit){
       ///player wins hand
-      alert("you have trump, you win")
+      winScore(bid)
 
     } else if (pSuit === tSuit && cSuit === tSuit) {
       if (pIndex > cIndex){
         ///player wins hand
-        alert("you have a higher trump")
+        winScore(bid)
       } else {
         ///computer wins hand
-        alert("i have a higher trump mother fucker!!!!1")
+        loseScore(bid)
       }
     
 
+    } else if (pSuit !== tSuit && cSuit === tSuit){
+      ///computer wins hand
+      loseScore(bid)
+    } else if (playerOnesTurn && pSuit !== cSuit){
+      ///Player wins hand
+      winScore(bid)
+    } else if (!playerOnesTurn && pSuit !== cSuit){
+      ///computer wins hand
+      loseScore(bid)
+    } else if (playerOnesTurn && pSuit === cSuit){
+      if (pIndex > cIndex){
+        ///player wins hand
+        winScore(bid)
+      }else{
+        ///computer wins hand
+        loseScore(bid)
+      }
+    } else if (!playerOnesTurn && pSuit === cSuit){
+      if (pIndex > cIndex){
+        ///player wins hand
+        winScore(bid)
+      } else {
+        ///computer wins hand
+        loseScore(bid)
+      }
     }
 
 }
 
 
+
+function winScore(bid) {
+  if (bid === 1){
+    points = points + 11;
+    var scoreHeading = document.getElementById("points");
+    scoreHeading.innerHTML = ("POINTS: " + points);
+  } else if (bid === 0) {
+    points = points - 1;
+    var scoreHeading = document.getElementById("points");
+    scoreHeading.innerHTML = ("POINTS: " + points);
+  }
+}
+
+function loseScore(bid) {
+  if (bid === 1){
+    points = points - 1;
+    var scoreHeading = document.getElementById("points");
+    scoreHeading.innerHTML = ("POINTS: " + points);
+  } else if (bid === 0){
+    points = points + 10;
+    var scoreHeading = document.getElementById("points");
+    scoreHeading.innerHTML = ("POINTS: " + points);
+  }
+}
 
 
 
