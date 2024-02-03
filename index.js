@@ -4,26 +4,12 @@ var cpuPoints = 0;
 var cpuBidTracker = 0;
 var trump = false;
 var playerOnesTurn = false;
-
 var lead = 1;
 
-
-///Spades
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
-
-///Clubs
 const Clubs = ["2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png"];
-
-///Hearts
 const Hearts = ["2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png"];
-
-///Diamonds
 const Diamonds = ["2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
-
-
-
-
-
 
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 var shuffledDeck = shuffleDeck(deck);
@@ -36,16 +22,81 @@ function shuffleDeck(array) {
   return array;
 }
 
+/////FIRST ACTION////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  //////SET TRUMP BUTTON TO SHUFFLE
+  var refreshImage = document.getElementById('trump-card');
+  if (refreshImage) {
+    refreshImage.addEventListener('click', function() {
+      // Reload the page when the image is clicked
+      shuffleHands()
+    });
+  }
+  /////FIRST ROUND://///////
+  establishLead()
+  playerDeal()
+  trumpDeal()
+
+
+  //BID////////////////////
+  var myButton = document.getElementById('0');
+  if (myButton) {
+    myButton.addEventListener('click', function() {
+      // Call your function when the button is clicked
+      playRound(0);
+    });
+  }
+  var myButton = document.getElementById('1');
+  if (myButton) {
+    myButton.addEventListener('click', function() {
+      // Call your function when the button is clicked
+      playRound(1);
+    });
+  }
+});
+/////////////////////////////////////////////////////////
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+function shuffleHands() {
+  round++
+
+  ////reset cpu bet
+  var cpuBet = document.getElementById('cpuBid');
+  cpuBet.innerHTML = "";
+  cpuBet.style.opacity = "0%";
+
+
+
+  var heading = document.getElementById("round");
+  heading.innerHTML = ("ROUND: " + round);
+
+
+
+  const shuffledDeck = shuffleDeck(deck);
+
+  establishLead()
+
+  playerDeal()
+
+  trumpDeal()
+
+  var cpuCard = document.getElementById('computer-card');
+  cpuCard.src = "./images/bike.png";
+}
+
+
+
+
+
 function establishLead() {
   //LEAD ESTABLISHED
-
 //var randomLead = Math.floor(Math.random() * 2);
 if (lead === 0){
   lead++
 } else {
   lead = lead - 1
 }
-
 if (lead === 0) {
   ///change lead to player one
   var pLead = document.getElementById('pDot');
@@ -77,12 +128,9 @@ if (lead === 0) {
 }
 }
 
-
-
 function cpuBet() {
   const tCard = shuffledDeck[2];
   const cCard = shuffledDeck[1];
-
   // Establish trump Suit
   let tSuit;
   if (Spades.includes(tCard)) {
@@ -94,7 +142,6 @@ function cpuBet() {
   } else if (Diamonds.includes(tCard)) {
     tSuit = "D";
   }
-
   // Establish cpu Suit
   let cSuit;
   let suit;
@@ -148,12 +195,6 @@ function cpuBet() {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
 function playerDeal() {
   //PLAYERS CARD DEAL
   var imageElement = document.getElementById('player-card');
@@ -165,7 +206,6 @@ function playerDeal() {
     imageElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[0];
   }
 }
-
 function trumpDeal() {
     //TRUMP CARD DEAL
     var trumpElement = document.getElementById('trump-card');
@@ -181,36 +221,6 @@ function trumpDeal() {
 
 
 
-/////////////////////TRUMP CARD PRESSED/////////////////////////
-/////////////////////TRUMP CARD PRESSED/////////////////////////
-/////////////////////TRUMP CARD PRESSED/////////////////////////
-
-function shuffleHands() {
-  round++
-
-  ////reset cpu bet
-  var cpuBet = document.getElementById('cpuBid');
-  cpuBet.innerHTML = "";
-  cpuBet.style.opacity = "0%";
-
-
-
-  var heading = document.getElementById("round");
-  heading.innerHTML = ("ROUND: " + round);
-
-
-
-  const shuffledDeck = shuffleDeck(deck);
-
-  establishLead()
-
-  playerDeal()
-
-  trumpDeal()
-
-  var cpuCard = document.getElementById('computer-card');
-  cpuCard.src = "./images/bike.png";
-}
 
 
 
@@ -221,38 +231,8 @@ function shuffleHands() {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  //////SET TRUMP BUTTON TO SHUFFLE
-  var refreshImage = document.getElementById('trump-card');
-  if (refreshImage) {
-    refreshImage.addEventListener('click', function() {
-      // Reload the page when the image is clicked
-      shuffleHands()
-    });
-  }
-
-  /////FIRST ROUND://///////
-  establishLead()
-  playerDeal()
-  trumpDeal()
 
 
-  //BID////////////////////
-  var myButton = document.getElementById('0');
-  if (myButton) {
-    myButton.addEventListener('click', function() {
-      // Call your function when the button is clicked
-      playRound(0);
-    });
-  }
-  var myButton = document.getElementById('1');
-  if (myButton) {
-    myButton.addEventListener('click', function() {
-      // Call your function when the button is clicked
-      playRound(1);
-    });
-  }
-});
 
 
 
@@ -402,65 +382,50 @@ function playRound(bid) {
 
 }
 
-
-
 function winScore(bid) {
   if (bid === 1){
     points = points + 11;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("MEGAN: " + points);
+    scoreHeading.innerHTML = ("Player One: " + points);
   } else if (bid === 0) {
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("MEGAN: " + points);
+    scoreHeading.innerHTML = ("Player One: " + points);
   }
 }
-
 function loseScore(bid) {
   if (bid === 1){
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("MEGAN: " + points);
+    scoreHeading.innerHTML = ("Player One: " + points);
   } else if (bid === 0){
     points = points + 10;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("MEGAN: " + points);
+    scoreHeading.innerHTML = ("Player One: " + points);
   }
 }
-
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
 function cpuWinScore(cIndex) {
-
-
-
-  
-
   if (cpuBidTracker === 1){
     cpuPoints = cpuPoints + 11;
     var scoreHeading = document.getElementById("cpuPoints");
-    scoreHeading.innerHTML = ("JARON: " + cpuPoints);
+    scoreHeading.innerHTML = ("CPU: " + cpuPoints);
   } else if (cpuBidTracker === 0) {
     cpuPoints = cpuPoints - 1;
     var scoreHeading = document.getElementById("cpuPoints");
-    scoreHeading.innerHTML = ("JARON: " + cpuPoints);
+    scoreHeading.innerHTML = ("CPU: " + cpuPoints);
   }
 }
-
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
 function cpuLoseScore(cIndex) {
-
-
-
-
-
   if (cpuBidTracker === 1){
     cpuPoints = cpuPoints - 1;
     var cpuScoreHeading = document.getElementById("cpuPoints");
-    cpuScoreHeading.innerHTML = ("JARON: " + cpuPoints);
+    cpuScoreHeading.innerHTML = ("CPU: " + cpuPoints);
   } else if (cpuBidTracker === 0){
     cpuPoints = cpuPoints + 10;
     var cpuScoreHeading = document.getElementById("cpuPoints");
-    cpuScoreHeading.innerHTML = ("JARON: " + cpuPoints);
+    cpuScoreHeading.innerHTML = ("CPU: " + cpuPoints);
   }
 }
 

@@ -15,16 +15,19 @@ body {
   position: absolute;
   top: 30px;
   left: 100px;
+  font-family: 'Diphylleia', serif;
 }
 #points {
   position: absolute;
   top: 80px;
   left: 100px;
+  font-family: 'Diphylleia', serif;
 }
 #cpuPoints {
   position: absolute;
   top: 80px;
   left: 300px;
+  font-family: 'Diphylleia', serif;
 }
 
 
@@ -48,13 +51,15 @@ body {
   font-size: 30px;
   position: absolute;
   left: 514px;
-  top: 600px
+  top: 600px;
+  font-family: 'Shrikhand', serif;
 }
 .trump-title{
   font-size: 30px;
   position: absolute;
-  left: 240px;
-  top: 40px
+  left: 234px;
+  top: 38px;
+  font-family: 'Shrikhand', serif;
 }
 .trump{
   width: 20px; /* Set the desired width */
