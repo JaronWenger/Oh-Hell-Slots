@@ -5,6 +5,8 @@ var cpuBidTracker = 0;
 var trump = false;
 var playerOnesTurn = false;
 
+var lead = 1;
+
 
 ///Spades
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
@@ -36,9 +38,15 @@ function shuffleDeck(array) {
 
 function establishLead() {
   //LEAD ESTABLISHED
-var randomLead = Math.floor(Math.random() * 2);
 
-if (randomLead === 0) {
+//var randomLead = Math.floor(Math.random() * 2);
+if (lead === 0){
+  lead++
+} else {
+  lead = lead - 1
+}
+
+if (lead === 0) {
   ///change lead to player one
   var pLead = document.getElementById('pDot');
   pLead.style.backgroundColor = "rgb(0, 126, 40)";
@@ -52,7 +60,7 @@ if (randomLead === 0) {
   cLead.style.width = "20px";
   cLead.style.top = "40px"
 
-}else if (randomLead === 1) {
+}else if (lead === 1) {
   //change lead to computer
   var cLead = document.getElementById('cDot');
   cLead.style.backgroundColor = "rgb(0, 126, 40)";
