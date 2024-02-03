@@ -17,6 +17,13 @@ body {
   left: 100px;
 }
 
+#cpuBid {
+  position: absolute;
+  top: 50px;
+  right: 820px;
+  opacity: 0%;
+}
+
 .table {
   position: relative;
   width: 600px; /* Adjusted width for the rectangle table */

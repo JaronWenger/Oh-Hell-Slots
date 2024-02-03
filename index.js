@@ -1,4 +1,19 @@
 var round = 1;
+const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
+
+///Clubs
+const Clubs = ["2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png"];
+
+///Hearts
+const Hearts = ["2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png"];
+
+///Diamonds
+const Diamonds = ["2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
+
+
+
+
+
 
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 var shuffledDeck = shuffleDeck(deck);
@@ -28,7 +43,6 @@ if (randomLead === 0) {
   cLead.style.width = "20px";
   cLead.style.top = "40px"
 
-
 }else if (randomLead === 1) {
   //change lead
   var cLead = document.getElementById('cDot');
@@ -36,6 +50,7 @@ if (randomLead === 0) {
   cLead.style.height = "60px";
   cLead.style.width = "60px";
   cLead.style.top = "25px";
+  cpuBet()
   //reset oposite
   var pLead = document.getElementById('pDot');
   pLead.style.backgroundColor = "rgb(0, 0, 0)";
@@ -43,6 +58,47 @@ if (randomLead === 0) {
   pLead.style.width = "20px";
 }
 }
+
+function cpuBet() {
+  const tCard = shuffledDeck[2];
+  const cCard = shuffledDeck[1];
+
+  // Establish trump Suit
+  let tSuit;
+  if (Spades.includes(tCard)) {
+    tSuit = "S";
+  } else if (Clubs.includes(tCard)) {
+    tSuit = "C";
+  } else if (Hearts.includes(tCard)) {
+    tSuit = "H";
+  } else if (Diamonds.includes(tCard)) {
+    tSuit = "D";
+  }
+
+  // Establish cpu Suit
+  let cSuit;
+  if (Spades.includes(cCard)) {
+    cSuit = "S";
+  } else if (Clubs.includes(cCard)) {
+    cSuit = "C";
+  } else if (Hearts.includes(cCard)) {
+    cSuit = "H";
+  } else if (Diamonds.includes(cCard)) {
+    cSuit = "D";
+  }
+
+  // Does the computer have trump?
+  if (tSuit === cSuit) {
+    var cpuBet = document.getElementById('cpuBid');
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+  } else {
+    var cpuBet = document.getElementById('cpuBid');
+    cpuBet.innerHTML = "0";
+    cpuBet.style.opacity = "100%";
+  }
+}
+
 
 
 
@@ -76,6 +132,14 @@ function trumpDeal() {
 /////////////////////TRUMP CARD PRESSED/////////////////////////
 function shuffleHands() {
   round++
+
+  ////reset cpu bet
+  var cpuBet = document.getElementById('cpuBid');
+  cpuBet.innerHTML = "";
+  cpuBet.style.opacity = "0%";
+
+
+
   var heading = document.getElementById("round");
   heading.innerHTML = ("ROUND: " + round);
 
@@ -148,6 +212,18 @@ function playRound(bid) {
     // Set the image source to the randomly chosen image path
     cpuCard.src = "./images/PNG-cards-1.3/" + shuffledDeck[1];
   }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
