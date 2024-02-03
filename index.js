@@ -24,6 +24,14 @@ function shuffleDeck(array) {
 
 /////FIRST ACTION////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function() {
+  ///////SIMULATION
+  var simTest = document.getElementById('sim');
+  if (simTest) {
+    simTest.addEventListener('click', function() {
+      // Reload the page when the image is clicked
+      sim()
+    });
+  }
   //////SET TRUMP BUTTON TO SHUFFLE
   var refreshImage = document.getElementById('trump-card');
   if (refreshImage) {
@@ -32,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
       shuffleHands()
     });
   }
+
   /////FIRST ROUND://///////
   establishLead()
   playerDeal()
@@ -461,6 +470,80 @@ if (playerOnesTurn && trump){
 }
 
 }
+
+
+
+////////////////////////////////////////////////////   S  I  M  U  L  A  T  I  O  N    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+var winPercentage = 0;
+var winPercentageArray = [];
+const trumpCardValueArray = ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "Js", "Qs", "Ks", "As"];
+const alphaCardValueArray = ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "Js", "Qs", "Ks", "As"];
+
+
+function sim() {
+  const tableBody = document.querySelector('#winPercentageTable tbody');
+  tableBody.innerHTML = '';
+  // Get the table body to dynamically populate rows
+  const newTableBody = document.querySelector('#winPercentageTable tbody');
+
+
+
+  ////////////////////////////////////////////////
+// Initialize a 2D array for win percentages
+for (let i = 0; i < trumpCardValueArray.length; i++) {
+  const rowArray = [];
+  for (let j = 0; j < 13; j++) {
+    rowArray.push(calculateWinPercentage(trumpCardValueArray[i], j));
+  }
+  winPercentageArray.push(rowArray);
+}
+
+///////////////////////////////////////////////////
+
+
+
+// Add rows to the table
+for (let i = 0; i < 13; i++) {
+  const row = newTableBody.insertRow();
+  for (let j = 0; j < 14; j++) {
+    const cell = row.insertCell(j);
+    if (j === 0) {
+      // Set column titles
+      cell.textContent = trumpCardValueArray[i];
+    } else {
+      // Set values from the 2D array
+      cell.textContent = winPercentageArray[i][j - 1];
+    }
+  }
+}
+
+
+}
+
+
+////////////////////////////////////////////////// GET PERCENTAGES! /////////////////////////
+
+var alphaCard = shuffleDeck[3];
+var betaCard = shuffleDeck[4];
+
+
+function calculateWinPercentage(alphaX, trumpX) {
+  return `${alphaCardValueArray[trumpX]},${alphaX}`;
+}
+
+
+
+
+
+
+
 
 
 
