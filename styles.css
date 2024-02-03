@@ -24,12 +24,12 @@ body {
   font-size: 30px;
   position: absolute;
   left: 270px;
-  top: 40px
+  top: 320px
 }
 .trump-title{
   font-size: 30px;
   position: absolute;
-  left: 25px;
+  left: 240px;
   top: 40px
 }
 .trump{
@@ -37,8 +37,8 @@ body {
   height: auto; /* Maintain the aspect ratio by setting height to auto */
   /* Add other styles as needed */
   position: absolute;
-  bottom: 90px;
-  left: 45px;
+  bottom: 85px;
+  left: 262px;
 }
 .trump img {
   width: 70px; /* Make the image fill the container width */
@@ -63,7 +63,7 @@ body {
   bottom: 90px;
   left: -39px;
 }
-.player-card {
+.player-hand img {
   width: 100px;
 }
 
@@ -75,7 +75,7 @@ body {
   top: 100px;
   left: 977px;
 }
-.computer-card {
+.computer-hand img {
   width: 100px;
 }
 
@@ -109,7 +109,7 @@ body {
 
 .button-left,
 .button-right {
-  top: 50%;
+  top: 430px;
   font-size: 30px;
   transform: translateY(-50%);
 }
