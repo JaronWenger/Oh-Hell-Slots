@@ -77,25 +77,47 @@ function cpuBet() {
 
   // Establish cpu Suit
   let cSuit;
+  let suit;
   if (Spades.includes(cCard)) {
     cSuit = "S";
+    suit = Spades
   } else if (Clubs.includes(cCard)) {
     cSuit = "C";
+    suit = Clubs
   } else if (Hearts.includes(cCard)) {
     cSuit = "H";
+    suit = Hearts
   } else if (Diamonds.includes(cCard)) {
     cSuit = "D";
+    suit = Diamonds
   }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////      COMPUTER BID STRATEGY         /////////////////////////////////////////////////////////////////////////////////
   // Does the computer have trump?
+  var cpuBet = document.getElementById('cpuBid');
+  const index = suit.indexOf(cCard);
+
   if (tSuit === cSuit) {
-    var cpuBet = document.getElementById('cpuBid');
-    cpuBet.innerHTML = "1";
-    cpuBet.style.opacity = "100%";
+    if (index > 0){
+/////Bid 1
+      cpuBet.innerHTML = "1";
+      cpuBet.style.opacity = "100%";
+    }else{
+////Bid 0      
+      cpuBet.innerHTML = "0";
+      cpuBet.style.opacity = "100%";
+    }
+
   } else {
-    var cpuBet = document.getElementById('cpuBid');
-    cpuBet.innerHTML = "0";
-    cpuBet.style.opacity = "100%";
+    if (index > 9){
+      /////Bid 1
+            cpuBet.innerHTML = "1";
+            cpuBet.style.opacity = "100%";
+          }else{
+      ////Bid 0      
+            cpuBet.innerHTML = "0";
+            cpuBet.style.opacity = "100%";
+          }
   }
 }
 
