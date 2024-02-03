@@ -23,8 +23,8 @@ body {
 .bid{
   font-size: 30px;
   position: absolute;
-  left: 270px;
-  top: 320px
+  left: 514px;
+  top: 600px
 }
 .trump-title{
   font-size: 30px;
@@ -109,15 +109,15 @@ body {
 
 .button-left,
 .button-right {
-  top: 430px;
+  top: 720px;
   font-size: 30px;
   transform: translateY(-50%);
 }
 
 .button-left {
-  left: calc(50% - 90px); /* Adjusted position for the left button */
+  left: 460px
 }
 
 .button-right {
-  left: calc(50% + 10px); /* Adjusted position for the right button */
+  left: 550px
 }
