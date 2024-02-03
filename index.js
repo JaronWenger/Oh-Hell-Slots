@@ -1,6 +1,7 @@
+var round = 1;
 
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
-const shuffledDeck = shuffleDeck(deck)
+var shuffledDeck = shuffleDeck(deck);
 
 function shuffleDeck(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -10,38 +11,45 @@ function shuffleDeck(array) {
   return array;
 }
 
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  var refreshImage = document.getElementById('trump-card');
-
-  if (refreshImage) {
-    refreshImage.addEventListener('click', function() {
-      // Reload the page when the image is clicked
-      window.location.reload();
-    });
-  }
-
-
-//LEAD ESTABLISHED
+function establishLead() {
+  //LEAD ESTABLISHED
 var randomLead = Math.floor(Math.random() * 2);
 
 if (randomLead === 0) {
+  ///change lead
   var pLead = document.getElementById('pDot');
   pLead.style.backgroundColor = "rgb(0, 126, 40)";
   pLead.style.height = "60px";
   pLead.style.width = "60px";
+  //reset oposite
+  var cLead = document.getElementById('cDot');
+  cLead.style.backgroundColor = "rgb(0, 0, 0)";
+  cLead.style.height = "20px";
+  cLead.style.width = "20px";
+  cLead.style.top = "40px"
+
+
 }else if (randomLead === 1) {
+  //change lead
   var cLead = document.getElementById('cDot');
   cLead.style.backgroundColor = "rgb(0, 126, 40)";
   cLead.style.height = "60px";
   cLead.style.width = "60px";
   cLead.style.top = "25px";
+  //reset oposite
+  var pLead = document.getElementById('pDot');
+  pLead.style.backgroundColor = "rgb(0, 0, 0)";
+  pLead.style.height = "20px";
+  pLead.style.width = "20px";
+}
 }
 
-//PLAYERS CARD DEAL
+
+
+
+
+function playerDeal() {
+  //PLAYERS CARD DEAL
   var imageElement = document.getElementById('player-card');
   if (imageElement) {
     // Get a random index from the array
@@ -50,16 +58,64 @@ if (randomLead === 0) {
     // Set the image source to the randomly chosen image path
     imageElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[0];
   }
+}
 
-  //TRUMP CARD DEAL
-  var trumpElement = document.getElementById('trump-card');
-  if (trumpElement) {
-    // Get a random index from the array
-    var randomIndex = Math.floor(Math.random() * shuffledDeck.length);
+function trumpDeal() {
+    //TRUMP CARD DEAL
+    var trumpElement = document.getElementById('trump-card');
+    if (trumpElement) {
+      // Get a random index from the array
+      var randomIndex = Math.floor(Math.random() * shuffledDeck.length);
+  
+      // Set the image source to the randomly chosen image path
+      trumpElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[2];
+    }
+}
 
-    // Set the image source to the randomly chosen image path
-    trumpElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[2];
+
+/////////////////////TRUMP CARD PRESSED/////////////////////////
+function shuffleHands() {
+  round++
+  var heading = document.getElementById("round");
+  heading.innerHTML = ("ROUND: " + round);
+
+
+
+  const shuffledDeck = shuffleDeck(deck);
+
+  establishLead()
+
+  playerDeal()
+
+  trumpDeal()
+
+  var cpuCard = document.getElementById('computer-card');
+  cpuCard.src = "./images/bike.png";
+}
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  //////SET TRUMP BUTTON TO SHUFFLE
+  var refreshImage = document.getElementById('trump-card');
+  if (refreshImage) {
+    refreshImage.addEventListener('click', function() {
+      // Reload the page when the image is clicked
+      shuffleHands()
+    });
   }
+
+  /////FIRST ROUND://///////
+  establishLead()
+  playerDeal()
+  trumpDeal()
 
 
   //BID////////////////////
@@ -77,8 +133,6 @@ if (randomLead === 0) {
       playRound(1);
     });
   }
-
-
 });
 
 

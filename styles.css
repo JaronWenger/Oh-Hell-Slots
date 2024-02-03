@@ -11,6 +11,12 @@ body {
   background-color: rgb(214, 214, 214);
 }
 
+#round {
+  position: absolute;
+  top: 30px;
+  left: 100px;
+}
+
 .table {
   position: relative;
   width: 600px; /* Adjusted width for the rectangle table */
