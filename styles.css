@@ -60,8 +60,8 @@ body {
   height: auto; /* Maintain the aspect ratio by setting height to auto */
   /* Add other styles as needed */
   position: absolute;
-  bottom: 90px;
-  left: -39px;
+  bottom: 120px;
+  left: 977px;
 }
 .player-hand img {
   width: 100px;

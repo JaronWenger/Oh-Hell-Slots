@@ -25,6 +25,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
+//LEAD ESTABLISHED
+var randomLead = Math.floor(Math.random() * 2);
+
+if (randomLead === 0) {
+  var pLead = document.getElementById('pDot');
+  pLead.style.backgroundColor = "rgb(0, 126, 40)";
+  pLead.style.height = "60px";
+  pLead.style.width = "60px";
+}else if (randomLead === 1) {
+  var cLead = document.getElementById('cDot');
+  cLead.style.backgroundColor = "rgb(0, 126, 40)";
+  cLead.style.height = "60px";
+  cLead.style.width = "60px";
+  cLead.style.top = "25px";
+}
 
 //PLAYERS CARD DEAL
   var imageElement = document.getElementById('player-card');
