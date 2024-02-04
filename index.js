@@ -4,7 +4,7 @@ var cpuPoints = 0;
 var cpuBidTracker = 0;
 var trump = false;
 var playerOnesTurn = false;
-var lead = 1;
+var lead = 5;
 
 const Spades = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png"];
 const Clubs = ["2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png"];
@@ -71,7 +71,7 @@ function shuffleHands() {
   var heading = document.getElementById("round");
   heading.innerHTML = ("ROUND: " + round);
 
-
+  resetLeads();
 
   const shuffledDeck = shuffleDeck(deck);
 
@@ -92,45 +92,147 @@ function shuffleHands() {
 function establishLead() {
   //LEAD ESTABLISHED
 //var randomLead = Math.floor(Math.random() * 2);
-if (lead === 0){
-  lead++
-} else {
-  lead = lead - 1
+lead++;
+
+// Use modulus to loop back to the first player after the 6th player
+lead %= 6;
+
+switch (lead) {
+  case 0:
+      ///change lead to player one
+    var pLead = document.getElementById('pDot');
+    pLead.style.backgroundColor = "rgb(0, 126, 40)";
+    pLead.style.height = "60px";
+    pLead.style.width = "60px";
+    playerOnesTurn = true;
+    break;
+
+  case 1:
+  //change lead to EPSILON
+  var eLead = document.getElementById('eDot');
+  eLead.style.backgroundColor = "rgb(0, 126, 40)";
+  eLead.style.height = "60px";
+  eLead.style.width = "60px";
+  eLead.style.left = "380px"
+  eLead.style.bottom = "385px"
+
+  playerOnesTurn = false;
+  cpuBet(3, "eBid")
+    break;
+
+  case 2:
+  //change lead to THETA
+  var tLead = document.getElementById('tDot');
+  tLead.style.backgroundColor = "rgb(0, 126, 40)";
+  tLead.style.height = "60px";
+  tLead.style.width = "60px";
+  tLead.style.left = "380px"
+  tLead.style.top = "180px"
+
+  playerOnesTurn = false;
+  cpuBet(4, "tBid")
+    break;
+  case 3:
+  //change lead to BETA
+  var bLead = document.getElementById('cDot');
+  bLead.style.backgroundColor = "rgb(0, 126, 40)";
+  bLead.style.height = "60px";
+  bLead.style.width = "60px";
+  bLead.style.top = "25px"
+
+  playerOnesTurn = false;
+  cpuBet(5, "cBid")
+    break;
+  case 4:
+  //change lead to GAMMA
+  var gLead = document.getElementById('gDot');
+  gLead.style.backgroundColor = "rgb(0, 126, 40)";
+  gLead.style.height = "60px";
+  gLead.style.width = "60px";
+  gLead.style.top = "180px";
+  gLead.style.right = "380px";
+
+  playerOnesTurn = false;
+  cpuBet(6, "gBid")
+    break;
+  case 5:
+  //change lead to DELTA
+  var dLead = document.getElementById('dDot');
+  dLead.style.backgroundColor = "rgb(0, 126, 40)";
+  dLead.style.height = "60px";
+  dLead.style.width = "60px";
+  dLead.style.bottom = "385px";
+  dLead.style.right = "380px";
+
+  playerOnesTurn = false;
+  cpuBet(7, "dBid")
+    break;
 }
-if (lead === 0) {
-  ///change lead to player one
+}///////////////////////
+////////////////////////
+function resetLeads() {
+  //reset all
   var pLead = document.getElementById('pDot');
-  pLead.style.backgroundColor = "rgb(0, 126, 40)";
-  pLead.style.height = "60px";
-  pLead.style.width = "60px";
-  playerOnesTurn = true;
+  pLead.style.backgroundColor = "rgb(0, 0, 0)";
+  pLead.style.height = "20px";
+  pLead.style.width = "20px";
+  
+
   //reset oposite
   var cLead = document.getElementById('cDot');
   cLead.style.backgroundColor = "rgb(0, 0, 0)";
   cLead.style.height = "20px";
   cLead.style.width = "20px";
-  cLead.style.top = "40px"
+  cLead.style.top = "50px";
 
-}else if (lead === 1) {
-  //change lead to computer
-  var cLead = document.getElementById('cDot');
-  cLead.style.backgroundColor = "rgb(0, 126, 40)";
-  cLead.style.height = "60px";
-  cLead.style.width = "60px";
-  cLead.style.top = "25px";
-  playerOnesTurn = false;
-  cpuBet()
-  //reset oposite
-  var pLead = document.getElementById('pDot');
-  pLead.style.backgroundColor = "rgb(0, 0, 0)";
-  pLead.style.height = "20px";
-  pLead.style.width = "20px";
-}
+
+  var eLead = document.getElementById('eDot');
+  eLead.style.backgroundColor = "rgb(0, 0, 0)";
+  eLead.style.height = "20px";
+  eLead.style.width = "20px";
+  eLead.style.left = "400px"
+  eLead.style.bottom = "400px"
+
+
+
+
+  var tLead = document.getElementById('tDot');
+  tLead.style.backgroundColor = "rgb(0, 0, 0)";
+  tLead.style.height = "20px";
+  tLead.style.width = "20px";
+  tLead.style.left = "400px";
+  tLead.style.top = "200px";
+
+
+
+
+  var gLead = document.getElementById('gDot');
+  gLead.style.backgroundColor = "rgb(0, 0, 0)";
+  gLead.style.height = "20px";
+  gLead.style.width = "20px";
+  gLead.style.top = "200px";
+  gLead.style.right = "400px";
+
+
+
+
+  var dLead = document.getElementById('dDot');
+  dLead.style.backgroundColor = "rgb(0, 0, 0)";
+  dLead.style.height = "20px";
+  dLead.style.width = "20px";
+  dLead.style.bottom = "400px";
+  dLead.style.right = "400px";
+
 }
 
-function cpuBet() {
+
+
+
+
+
+function cpuBet(num, computerBid) {
   const tCard = shuffledDeck[2];
-  const cCard = shuffledDeck[1];
+  const cCard = shuffledDeck[num];
   // Establish trump Suit
   let tSuit;
   if (Spades.includes(tCard)) {
@@ -161,7 +263,7 @@ function cpuBet() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////      COMPUTER BID STRATEGY         /////////////////////////////////////////////////////////////////////////////////
   // Does the computer have trump?
-  var cpuBet = document.getElementById('cpuBid');
+  var cpuBet = document.getElementById(computerBid);
   const index = suit.indexOf(cCard);
 
   if (tSuit === cSuit) {
@@ -194,6 +296,8 @@ function cpuBet() {
   }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 function playerDeal() {
   //PLAYERS CARD DEAL
@@ -386,22 +490,22 @@ function winScore(bid) {
   if (bid === 1){
     points = points + 11;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("Player One: " + points);
+    scoreHeading.innerHTML = ("A: " + points);
   } else if (bid === 0) {
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("Player One: " + points);
+    scoreHeading.innerHTML = ("A: " + points);
   }
 }
 function loseScore(bid) {
   if (bid === 1){
     points = points - 1;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("Player One: " + points);
+    scoreHeading.innerHTML = ("A: " + points);
   } else if (bid === 0){
     points = points + 10;
     var scoreHeading = document.getElementById("points");
-    scoreHeading.innerHTML = ("Player One: " + points);
+    scoreHeading.innerHTML = ("A: " + points);
   }
 }
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
@@ -409,11 +513,11 @@ function cpuWinScore(cIndex) {
   if (cpuBidTracker === 1){
     cpuPoints = cpuPoints + 11;
     var scoreHeading = document.getElementById("cpuPoints");
-    scoreHeading.innerHTML = ("CPU: " + cpuPoints);
+    scoreHeading.innerHTML = ("B: " + cpuPoints);
   } else if (cpuBidTracker === 0) {
     cpuPoints = cpuPoints - 1;
     var scoreHeading = document.getElementById("cpuPoints");
-    scoreHeading.innerHTML = ("CPU: " + cpuPoints);
+    scoreHeading.innerHTML = ("B: " + cpuPoints);
   }
 }
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
@@ -421,11 +525,11 @@ function cpuLoseScore(cIndex) {
   if (cpuBidTracker === 1){
     cpuPoints = cpuPoints - 1;
     var cpuScoreHeading = document.getElementById("cpuPoints");
-    cpuScoreHeading.innerHTML = ("CPU: " + cpuPoints);
+    cpuScoreHeading.innerHTML = ("B: " + cpuPoints);
   } else if (cpuBidTracker === 0){
     cpuPoints = cpuPoints + 10;
     var cpuScoreHeading = document.getElementById("cpuPoints");
-    cpuScoreHeading.innerHTML = ("CPU: " + cpuPoints);
+    cpuScoreHeading.innerHTML = ("B: " + cpuPoints);
   }
 }
 
