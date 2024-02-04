@@ -11,10 +11,17 @@ const Clubs = ["2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9
 const Hearts = ["2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png"];
 const Diamonds = ["2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 
+
+//sim decks
 const newDeck = ["2s","3s","4s","5s","6s","7s","8s","9s","10s","Js","Qs","Ks","As","2c","3c","4c","5c","6c","7c","8c","9c","10c","Jc","Qc","Kc","Ac","2h","3h","4h","5h","6h","7h","8h","9h","10h","Jh","Qh","Kh","Ah","2d","3d","4d","5d","6d","7d","8d","9d","10d","Jd","Qd","Kd","Ad"];
+const SpadesX = ["2s","3s","4s","5s","6s","7s","8s","9s","10s","Js","Qs","Ks","As"];
+const ClubsX = ["2c","3c","4c","5c","6c","7c","8c","9c","10c","Jc","Qc","Kc","Ac"];
+const HeartsX = ["2h","3h","4h","5h","6h","7h","8h","9h","10h","Jh","Qh","Kh","Ah"];
+const DiamondsX = ["2d","3d","4d","5d","6d","7d","8d","9d","10d","Jd","Qd","Kd","Ad"];
+
 
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
-var shuffledDeck = shuffleDeck(deck);
+var shuffledDeck = shuffleDeck([...deck]);
 
 function shuffleDeck(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -84,7 +91,8 @@ function shuffleHands() {
 
 
 
-  const shuffledDeck = shuffleDeck(deck);
+  shuffledDeck = shuffleDeck([...deck]);
+
 
   establishLead()
 
@@ -483,13 +491,14 @@ if (playerOnesTurn && trump){
 
 
 
-var winPercentage = 0;
 var winPercentageArray = [];
 const trumpCardValueArray = ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "Js", "Qs", "Ks", "As"];
 const alphaCardValueArray = ["2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "Js", "Qs", "Ks", "As"];
 
 
 function sim() {
+  const numRounds = 100000;
+
   const tableBody = document.querySelector('#winPercentageTable tbody');
   tableBody.innerHTML = '';
   // Get the table body to dynamically populate rows
@@ -502,8 +511,26 @@ function sim() {
 for (let i = 0; i < trumpCardValueArray.length; i++) {
   const rowArray = [];
   for (let j = 0; j < 13; j++) {
-    rowArray.push(calculateWinPercentage(alphaCardValueArray[j],trumpCardValueArray[i]));
+
+    let wins = 0;
+    let winPercentage = 0;
+    for (let k = 0; k < numRounds; k++) {
+
+      let winOrLoss = calculateWinPercentage(alphaCardValueArray[j],trumpCardValueArray[i])
+      if (winOrLoss === "win"){
+        wins++
+      }
+    }
+    winPercentage = wins / numRounds;
+
+    
+
+    rowArray.push(winPercentage);
+
+
+
   }
+
   winPercentageArray.push(rowArray);
 }
 
@@ -525,7 +552,6 @@ for (let i = 0; i < 13; i++) {
     }
   }
 }
-console.log(newDeck)
 
 
 }
@@ -542,18 +568,18 @@ console.log(newDeck)
 ////given these cards
 function calculateWinPercentage(alphaX, trumpX) {
 /////
-console.log(newDeck)
 
 
-  var newShuffledDeck = newShuffleDeck(newDeck);
+///...allows newDeck to never change.
+var newShuffledDeck = newShuffleDeck([...newDeck]);
 
-  function newShuffleDeck(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+function newShuffleDeck(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
+}
 /////
 var indexToRemove = newShuffledDeck.indexOf(alphaX);
 var indexToRemove2 = newShuffledDeck.indexOf(trumpX);
@@ -575,10 +601,115 @@ indicesToRemove.forEach(index => {
 
 
 
+  //////Win Logic/////////// / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
   if (alphaX === trumpX){
     return "_"
   } else {
-  return `${alphaX},${trumpX}`;
+/////////////
+    
+      // Establish trump Suit
+      let tSuit;
+      let trumpSuit;
+      if (SpadesX.includes(trumpX)) {
+        tSuit = "S";
+        trumpSuit = SpadesX
+      } else if (Clubs.includes(trumpX)) {
+        tSuit = "C";
+        trumpSuit = ClubsX
+      } else if (Hearts.includes(trumpX)) {
+        tSuit = "H";
+        trumpSuit = HeartsX
+      } else if (Diamonds.includes(trumpX)) {
+        tSuit = "D";
+        trumpSuit = DiamondsX
+      }
+    
+      // Establish beta Suit
+      let bSuit;
+      let betaSuit;
+      if (SpadesX.includes(betaX)) {
+        bSuit = "S";
+        betaSuit = SpadesX
+      } else if (ClubsX.includes(betaX)) {
+        bSuit = "C";
+        betaSuit = ClubsX
+      } else if (HeartsX.includes(betaX)) {
+        bSuit = "H";
+        betaSuit = HeartsX
+      } else if (DiamondsX.includes(betaX)) {
+        bSuit = "D";
+        betaSuit = DiamondsX
+      }
+    
+        // Establish alpha Suit
+        let aSuit;
+        let alphaSuit;
+        if (SpadesX.includes(alphaX)) {
+          aSuit = "S";
+          alphaSuit = SpadesX
+        } else if (ClubsX.includes(alphaX)) {
+          aSuit = "C";
+          alphaSuit = ClubsX
+        } else if (HeartsX.includes(alphaX)) {
+          aSuit = "H";
+          alphaSuit = HeartsX
+        } else if (DiamondsX.includes(alphaX)) {
+          aSuit = "D";
+          alphaSuit = DiamondsX
+        }
+    
+    
+    
+    
+    
+        ///////////////////winning or losing the trick
+        var aIndex = alphaSuit.indexOf(alphaX)
+        var bIndex = betaSuit.indexOf(betaX)
+        var tIndex = trumpSuit.indexOf(trumpX)
+    
+        if (aSuit === tSuit && bSuit !== tSuit){
+          ///alpha wins hand
+          return `win`;
+    
+        } else if (aSuit === tSuit && bSuit === tSuit) {
+          if (aIndex > bIndex){
+            ///alpha wins hand
+            return `win`;
+
+          } else {
+            ///beta wins hand
+            return `loss`;
+          }
+        
+    
+        } else if (aSuit !== tSuit && bSuit === tSuit){
+          ///beta wins hand
+          return `loss`;
+    
+        } else if (aSuit !== bSuit){
+          ///alpha wins hand
+          return `win`;
+
+        } else if (aSuit === bSuit){
+          if (aIndex > bIndex){
+            ///alpha wins hand
+            return `win`;
+
+          }else{
+            ///beta wins hand
+            return `loss`;
+
+          }
+        }
+    
+    
+
+
+
+
+
+////////////////////
+  //return `${alphaX},${trumpX}`;
 }
 }
 
