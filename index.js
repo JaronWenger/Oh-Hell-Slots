@@ -11,6 +11,8 @@ const Clubs = ["2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9
 const Hearts = ["2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png"];
 const Diamonds = ["2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 
+const newDeck = ["2s","3s","4s","5s","6s","7s","8s","9s","10s","Js","Qs","Ks","As","2c","3c","4c","5c","6c","7c","8c","9c","10c","Jc","Qc","Kc","Ac","2h","3h","4h","5h","6h","7h","8h","9h","10h","Jh","Qh","Kh","Ah","2d","3d","4d","5d","6d","7d","8d","9d","10d","Jd","Qd","Kd","Ad"];
+
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 var shuffledDeck = shuffleDeck(deck);
 
@@ -500,7 +502,7 @@ function sim() {
 for (let i = 0; i < trumpCardValueArray.length; i++) {
   const rowArray = [];
   for (let j = 0; j < 13; j++) {
-    rowArray.push(calculateWinPercentage(trumpCardValueArray[i], j));
+    rowArray.push(calculateWinPercentage(alphaCardValueArray[j],trumpCardValueArray[i]));
   }
   winPercentageArray.push(rowArray);
 }
@@ -523,6 +525,7 @@ for (let i = 0; i < 13; i++) {
     }
   }
 }
+console.log(newDeck)
 
 
 }
@@ -530,13 +533,56 @@ for (let i = 0; i < 13; i++) {
 
 ////////////////////////////////////////////////// GET PERCENTAGES! /////////////////////////
 
-var alphaCard = shuffleDeck[3];
-var betaCard = shuffleDeck[4];
 
 
+
+
+/////////////RETURN PERCENTAGES
+
+////given these cards
 function calculateWinPercentage(alphaX, trumpX) {
-  return `${alphaCardValueArray[trumpX]},${alphaX}`;
+/////
+console.log(newDeck)
+
+
+  var newShuffledDeck = newShuffleDeck(newDeck);
+
+  function newShuffleDeck(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+/////
+var indexToRemove = newShuffledDeck.indexOf(alphaX);
+var indexToRemove2 = newShuffledDeck.indexOf(trumpX);
+
+// Create an array with the indices to remove and sort them
+var indicesToRemove = [indexToRemove, indexToRemove2].sort((a, b) => b - a);
+
+// Remove the cards from the newShuffledDeck in reverse order
+indicesToRemove.forEach(index => {
+    if (index !== -1) {
+        newShuffledDeck.splice(index, 1);
+    }
+});
+
+  var betaX = newShuffledDeck[0]
+  ///All cards established
+
+
+
+
+
+  if (alphaX === trumpX){
+    return "_"
+  } else {
+  return `${alphaX},${trumpX}`;
 }
+}
+
+
 
 
 

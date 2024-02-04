@@ -1,0 +1,88 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UP AND DOWN THE RIVER</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Diphylleia&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 id="round">ROUND: 1</h1>
+  <h2 id="points">Player One: 0</h2>
+  <h2 id="cpuPoints">CPU: 0</h2>
+  
+  <div id="pDot" class="player-spot"></div>
+
+    <div class="player-hand">
+    <img id="player-card" src="./images/PNG-cards-1.3/As.png" alt="Description of the image">
+    </div>
+
+
+  <div class="table">
+    <div class="wood-trim"></div>
+    <div class="gold-trim"></div>
+    <div class="rectangle-table"></div>
+    <!-- New buttons added -->
+    <h2 class="bid">BID:</h2>
+    <h2 class="trump-title">TRUMP:</h2>
+    <div class="trump">
+      <img id="trump-card" src="./images/PNG-cards-1.3/Ah.png" alt="Description of the image">
+    </div>
+    <button id="0" class="square-button button-left">0</button>
+    <button id="1" class="square-button button-right">1</button>
+  </div>
+
+
+
+
+  <div id="cDot" class="computer-spot"></div>
+
+  <button id="cpuBid" class="square-button"></button>
+
+  <div class="computer-hand">
+    <img id="computer-card" src="./images/bike.png" alt="Description of the image">
+  </div>
+
+
+
+         <!--SIMULATOIN-->
+  <button id="sim" >SIM</button>
+  <div class="simContainer"></div>
+
+  <table id="winPercentageTable">
+    <thead>
+      <tr>
+        <th></th>
+        <th>2s</th>
+        <th>3s</th>
+        <th>4s</th>
+        <th>5s</th>
+        <th>6s</th>
+        <th>7s</th>
+        <th>8s</th>
+        <th>9s</th>
+        <th>10s</th>
+        <th>Js</th>
+        <th>Qs</th>
+        <th>Ks</th>
+        <th>As</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be dynamically added here -->
+    </tbody>
+  </table>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="index.js" charset="utf-8"></script>
+</body>
+</html>
