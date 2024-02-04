@@ -687,8 +687,8 @@ indicesToRemove.forEach(index => {
           return `loss`;
     
         } else if (aSuit !== bSuit){
-          ///alpha wins hand
-          return `win`;
+          ///beta wins hand
+          return `loss`;
 
         } else if (aSuit === bSuit){
           if (aIndex > bIndex){
