@@ -173,9 +173,9 @@ function cpuBet() {
       cpuBidTracker = 1
     }else{
 ////Bid 0      
-      cpuBet.innerHTML = "0";
+      cpuBet.innerHTML = "1";
       cpuBet.style.opacity = "100%";
-      cpuBidTracker = 0
+      cpuBidTracker = 1
     }
 
   } else {
@@ -187,9 +187,9 @@ function cpuBet() {
             cpuBidTracker = 1
           }else{
       ////Bid 0      
-            cpuBet.innerHTML = "0";
+            cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
-            cpuBidTracker = 0
+            cpuBidTracker = 1
           }
   }
 }
@@ -450,8 +450,8 @@ if (playerOnesTurn && trump){
   cpuBet.style.opacity = "100%";
 } else if (playerOnesTurn && !trump){
   if (cIndex > 10){
-    cpuBidTracker = 1
-    cpuBet.innerHTML = "1";
+    cpuBidTracker = 0
+    cpuBet.innerHTML = "0";
     cpuBet.style.opacity = "100%";
   } else {
     cpuBidTracker = 0
