@@ -72,7 +72,7 @@ function shuffleHands() {
 
   resetLeads();
 
-  const shuffledDeck = shuffleDeck(deck);
+  shuffledDeck = shuffleDeck([...deck]);
 
   establishLead()
 
@@ -490,34 +490,45 @@ function playRound(bid) {
     for (let i = 0; i < cards.length; i++) {
       const currentCard = cards[i];
       const currentSuit = currentCard.charAt(currentCard.length - 5).toLowerCase(); // Extract the suit and convert to lowercase
-      console.log(currentSuit)
-    
+
       if (currentSuit === trumSuit) {
         trumpCardPositions.push(i);
       }
     }
 
-    console.log(trumpCardPositions)
     if (trumpCardPositions.length > 0) {
       console.log(trumpCardPositions);
+      console.log(cardIndexes)
+   
+      const selectedCardValues = trumpCardPositions.map(index => cardIndexes[index]);
+      const maxCardValue = Math.max(...selectedCardValues);
+      const indexOfMaxValue = selectedCardValues.indexOf(maxCardValue);
 
-      const indexOfMaxValue = trumpCardPositions.reduce((maxIndex, currentIndex) => (cardIndexes[currentIndex] > cardIndexes[maxIndex] ? currentIndex : maxIndex), 0);
+      console.log("selectedCardValues:", selectedCardValues);
+      console.log("Max Card Value:", maxCardValue);
+      console.log("Index of Max Value:", indexOfMaxValue);
+      console.log("Index of the greatest number:", trumpCardPositions[indexOfMaxValue]);
+
+      console.log(trumpCardPositions[indexOfMaxValue])
+
+      winner = trumpCardPositions[indexOfMaxValue]
 
 
-      console.log(indexOfMaxValue)
 
+
+      
     if (winner === 0){
-      //player 1 wins
+      console.log("ALPHA wins")
     } else if (winner === 1 ) {
-      //EPSILON wins
+      console.log("epsilon wins")
     } else if (winner === 2 ) {
-      //THETA wins
+      console.log("Theta wins")
     } else if (winner === 3 ) {
-      //BETA wins
+      console.log("Beta wins")
     } else if (winner === 4 ) {
-      //GAMMA wins
+      console.log("Gamma wins")
     } else if (winner === 5 ) {
-      //DELTA wins
+      console.log("DELTA wins")
     }
 
 
@@ -531,10 +542,82 @@ function playRound(bid) {
 
 
     } else {
+      
       console.log("No trump cards found in the array.");
+
+
+      const leadCardPositions = [];
+
+      var leader = pSuit
+      if (lead === 0){
+        leader = pSuit
+      } else if (lead === 1){
+        leader = eSuit
+      } else if (lead === 2){
+        leader = tSuit
+      } else if (lead === 3){
+        leader = cSuit
+      } else if (lead === 4){
+        leader = gSuit
+      } else if (lead === 5){
+        leader = dSuit
+      }
+      console.log(leader)
+
+      for (let i = 0; i < cards.length; i++) {
+        const currentCard = cards[i];
+        const currentSuit = currentCard.charAt(currentCard.length - 5).toLowerCase(); // Extract the suit and convert to lowercase
+  
+        if (currentSuit === leader) {
+          leadCardPositions.push(i);
+        }
+      }
+
+
+      if (leadCardPositions.length > 0) {
+        console.log(leadCardPositions);
+        console.log(cardIndexes)
+     
+        const selectedCardValues = leadCardPositions.map(index => cardIndexes[index]);
+        const maxCardValue = Math.max(...selectedCardValues);
+        const indexOfMaxValue = selectedCardValues.indexOf(maxCardValue);
+  
+        console.log("selectedCardValues:", selectedCardValues);
+        console.log("Max Card Value:", maxCardValue);
+        console.log("Index of Max Value:", indexOfMaxValue);
+        console.log("Index of the greatest number:", leadCardPositions[indexOfMaxValue]);
+  
+        console.log(leadCardPositions[indexOfMaxValue])
+  
+        winner = leadCardPositions[indexOfMaxValue]
+  
+  
+  
+  
+        
+      if (winner === 0){
+        console.log("ALPHA wins")
+      } else if (winner === 1 ) {
+        console.log("epsilon wins")
+      } else if (winner === 2 ) {
+        console.log("Theta wins")
+      } else if (winner === 3 ) {
+        console.log("Beta wins")
+      } else if (winner === 4 ) {
+        console.log("Gamma wins")
+      } else if (winner === 5 ) {
+        console.log("DELTA wins")
+      }
+
+
+
+
+
+
+
     }
 
-
+  }
 }
 
 function determineSuit(cpuCard) {
@@ -543,16 +626,16 @@ function determineSuit(cpuCard) {
 
   if (Spades.includes(cpuCard)) {
     cSuit = "s";
-    cpuSuit = "Spades";
+    cpuSuit = Spades;
   } else if (Clubs.includes(cpuCard)) {
     cSuit = "c";
-    cpuSuit = "Clubs";
+    cpuSuit = Clubs;
   } else if (Hearts.includes(cpuCard)) {
     cSuit = "h";
-    cpuSuit = "Hearts";
+    cpuSuit = Hearts;
   } else if (Diamonds.includes(cpuCard)) {
     cSuit = "d";
-    cpuSuit = "Diamonds";
+    cpuSuit = Diamonds;
   } else {
     // Handle the case when cpuCard is not found in any suit
     console.error("Invalid card:", cpuCard);
