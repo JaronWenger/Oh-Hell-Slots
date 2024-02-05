@@ -17,7 +17,7 @@ const Hearts = ["2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","
 const Diamonds = ["2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
 
 const deck = ["2s.png","3s.png","4s.png","5s.png","6s.png","7s.png","8s.png","9s.png","10s.png","Js.png","Qs.png","Ks.png","As.png","2c.png","3c.png","4c.png","5c.png","6c.png","7c.png","8c.png","9c.png","10c.png","Jc.png","Qc.png","Kc.png","Ac.png","2h.png","3h.png","4h.png","5h.png","6h.png","7h.png","8h.png","9h.png","10h.png","Jh.png","Qh.png","Kh.png","Ah.png","2d.png","3d.png","4d.png","5d.png","6d.png","7d.png","8d.png","9d.png","10d.png","Jd.png","Qd.png","Kd.png","Ad.png"];
-var shuffledDeck = shuffleDeck(deck);
+var shuffledDeck = shuffleDeck([...deck]);
 
 function shuffleDeck(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /////////////////////TRUMP CARD PRESSED/////////////////////////
 /////////////////////TRUMP CARD PRESSED/////////////////////////
 function shuffleHands() {
+
   round++
 
   var heading = document.getElementById("round");
@@ -434,22 +435,22 @@ function playRound(bid) {
 
 
   // Establish player Suit
-  const pCardInfo = determineSuit(cpuCard);
+  const pCardInfo = determineSuit(playerCard);
   var pSuit = pCardInfo.cSuit; // Output: "S"
   var playerSuit = pCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish trump Suit
-  const tCardInfo = determineSuit(cpuCard);
-  var trumSuit = tCardInfo.cSuit; // Output: "S"
-  var trumpSuit = tCardInfo.cpuSuit; // Output: "Spades"
+  const trumCardInfo = determineSuit(trumpCard);
+  var trumSuit = trumCardInfo.cSuit; // Output: "S"
+  var trumpSuit = trumCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish EPSILON Suit
-  const eCardInfo = determineSuit(cpuCard);
+  const eCardInfo = determineSuit(eCard);
   var eSuit = eCardInfo.cSuit; // Output: "S"
   var epsilonSuit = eCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish THETA Suit
-  const tcardInfo = determineSuit(cpuCard);
+  const tCardInfo = determineSuit(tCard);
   var tSuit = tCardInfo.cSuit; // Output: "S"
   var thetaSuit = tCardInfo.cpuSuit; // Output: "Spades"
 
@@ -459,12 +460,12 @@ function playRound(bid) {
   var cpuSuit = cardInfo.cpuSuit; // Output: "Spades"
 
   // Establish GAMMA Suit
-  const gCardInfo = determineSuit(cpuCard);
+  const gCardInfo = determineSuit(gCard);
   var gSuit = gCardInfo.cSuit; // Output: "S"
   var gammaSuit = gCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish DELTA Suit
-  const dCardInfo = determineSuit(cpuCard);
+  const dCardInfo = determineSuit(dCard);
   var dSuit = dCardInfo.cSuit; // Output: "S"
   var deltaSuit = dCardInfo.cpuSuit; // Output: "Spades"
 
@@ -488,7 +489,7 @@ function playRound(bid) {
 
     for (let i = 0; i < cards.length; i++) {
       const currentCard = cards[i];
-      const currentSuit = currentCard.charAt(currentCard.length - 1).toLowerCase(); // Extract the suit and convert to lowercase
+      const currentSuit = currentCard.charAt(currentCard.length - 5).toLowerCase(); // Extract the suit and convert to lowercase
       console.log(currentSuit)
     
       if (currentSuit === trumSuit) {
