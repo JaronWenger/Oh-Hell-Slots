@@ -1,6 +1,11 @@
 var round = 1;
 var points = 0;
+var ePoints = 0;
+var tPoints = 0;
 var cpuPoints = 0;
+var gPoints = 0;
+var dPoints = 0;
+
 var cpuBidTracker = 0;
 var trump = false;
 var playerOnesTurn = false;
@@ -61,13 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function shuffleHands() {
   round++
 
-  ////reset cpu bet
-  var cpuBet = document.getElementById('cpuBid');
-  cpuBet.innerHTML = "";
-  cpuBet.style.opacity = "0%";
-
-
-
   var heading = document.getElementById("round");
   heading.innerHTML = ("ROUND: " + round);
 
@@ -81,8 +79,20 @@ function shuffleHands() {
 
   trumpDeal()
 
+  var gCard = document.getElementById('gamma-card');
+  gCard.src = "./images/bike.png";
+
+  var dCard = document.getElementById('delta-card');
+  dCard.src = "./images/bike.png";
+
   var cpuCard = document.getElementById('computer-card');
   cpuCard.src = "./images/bike.png";
+
+  var eCard = document.getElementById('epsilon-card');
+  eCard.src = "./images/bike.png";
+
+  var tCard = document.getElementById('theta-card');
+  tCard.src = "./images/bike.png";
 }
 
 
@@ -118,6 +128,10 @@ switch (lead) {
 
   playerOnesTurn = false;
   cpuBet(3, "eBid")
+  cpuBet(4, "tBid")
+  cpuBet(5, "cpuBid")
+  cpuBet(6, "gBid")
+  cpuBet(7, "dBid")
     break;
 
   case 2:
@@ -131,6 +145,10 @@ switch (lead) {
 
   playerOnesTurn = false;
   cpuBet(4, "tBid")
+  cpuBet(5, "cpuBid")
+  cpuBet(6, "gBid")
+  cpuBet(7, "dBid")
+
     break;
   case 3:
   //change lead to BETA
@@ -141,7 +159,9 @@ switch (lead) {
   bLead.style.top = "25px"
 
   playerOnesTurn = false;
-  cpuBet(5, "cBid")
+  cpuBet(5, "cpuBid")
+  cpuBet(6, "gBid")
+  cpuBet(7, "dBid")
     break;
   case 4:
   //change lead to GAMMA
@@ -154,6 +174,7 @@ switch (lead) {
 
   playerOnesTurn = false;
   cpuBet(6, "gBid")
+  cpuBet(7, "dBid")
     break;
   case 5:
   //change lead to DELTA
@@ -223,6 +244,31 @@ function resetLeads() {
   dLead.style.bottom = "400px";
   dLead.style.right = "400px";
 
+
+
+
+
+
+
+  var cpuBet = document.getElementById('cpuBid');
+  cpuBet.innerHTML = "";
+  cpuBet.style.opacity = "0%";
+
+  var gBet = document.getElementById('gBid');
+  gBet.innerHTML = "";
+  gBet.style.opacity = "0%";
+
+  var dBet = document.getElementById('dBid');
+  dBet.innerHTML = "";
+  dBet.style.opacity = "0%";
+
+  var eBet = document.getElementById('eBid');
+  eBet.innerHTML = "";
+  eBet.style.opacity = "0%";
+
+  var tBet = document.getElementById('tBid');
+  tBet.innerHTML = "";
+  tBet.style.opacity = "0%";
 }
 
 
@@ -282,20 +328,30 @@ function cpuBet(num, computerBid) {
 
   } else {
     trump = false
-    if (index > 6){
+    if (index > 11){
       /////Bid 1
             cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
             cpuBidTracker = 1
           }else{
       ////Bid 0      
-            cpuBet.innerHTML = "1";
+            cpuBet.innerHTML = "0";
             cpuBet.style.opacity = "100%";
             cpuBidTracker = 1
           }
   }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -348,72 +404,82 @@ function trumpDeal() {
 /////////////////////////////////////////////////////////////////////////       PLAY BALL         ////////////////////////////////////////////////////////////////////////////////
 function playRound(bid) {
   
+  ////SHOW CARDS
+  var eCardElement = document.getElementById('epsilon-card');
+  eCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[3];
+
+  var tCardElement = document.getElementById('theta-card');
+  tCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[4];
+
   var cpuCardElement = document.getElementById('computer-card');
-  cpuCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[1];
+  cpuCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[5];
+
+  var gCardElement = document.getElementById('gamma-card');
+  gCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[6];
+
+  var dCardElement = document.getElementById('delta-card');
+  dCardElement.src = "./images/PNG-cards-1.3/" + shuffledDeck[7];
+
 
   const playerCard = shuffledDeck[0];
   const trumpCard = shuffledDeck[2];
-  const cpuCard = shuffledDeck[1];
+
+  const eCard = shuffledDeck[3];
+  const tCard = shuffledDeck[4];
+  const cpuCard = shuffledDeck[5];
+  const gCard = shuffledDeck[6];
+  const dCard = shuffledDeck[7];
+
+
+  // Establish player Suit
+  const pCardInfo = determineSuit(cpuCard);
+  var pSuit = cardInfo.cSuit; // Output: "S"
+  var playerSuit = cardInfo.cpuSuit; // Output: "Spades"
 
   // Establish trump Suit
-  let tSuit;
-  let trumpSuit;
-  if (Spades.includes(trumpCard)) {
-    tSuit = "S";
-    trumpSuit = Spades
-  } else if (Clubs.includes(trumpCard)) {
-    tSuit = "C";
-    trumpSuit = Clubs
-  } else if (Hearts.includes(trumpCard)) {
-    tSuit = "H";
-    trumpSuit = Hearts
-  } else if (Diamonds.includes(trumpCard)) {
-    tSuit = "D";
-    trumpSuit = Diamonds
-  }
+  const tCardInfo = determineSuit(cpuCard);
+  var tSuit = tCardInfo.cSuit; // Output: "S"
+  var trumpSuit = tCardInfo.cpuSuit; // Output: "Spades"
+
+  // Establish EPSILON Suit
+  const eCardInfo = determineSuit(cpuCard);
+  var eSuit = eCardInfo.cSuit; // Output: "S"
+  var epsilonSuit = eCardInfo.cpuSuit; // Output: "Spades"
+
+  // Establish THETA Suit
+  const tcardInfo = determineSuit(cpuCard);
+  var tSuit = tCardInfo.cSuit; // Output: "S"
+  var thetaSuit = tCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish cpu Suit
-  let cSuit;
-  let cpuSuit;
-  if (Spades.includes(cpuCard)) {
-    cSuit = "S";
-    cpuSuit = Spades
-  } else if (Clubs.includes(cpuCard)) {
-    cSuit = "C";
-    cpuSuit = Clubs
-  } else if (Hearts.includes(cpuCard)) {
-    cSuit = "H";
-    cpuSuit = Hearts
-  } else if (Diamonds.includes(cpuCard)) {
-    cSuit = "D";
-    cpuSuit = Diamonds
-  }
+  const cardInfo = determineSuit(cpuCard);
+  var cSuit = cardInfo.cSuit; // Output: "S"
+  var cpuSuit = cardInfo.cpuSuit; // Output: "Spades"
 
-    // Establish player Suit
-    let pSuit;
-    let playerSuit;
-    if (Spades.includes(playerCard)) {
-      pSuit = "S";
-      playerSuit = Spades
-    } else if (Clubs.includes(playerCard)) {
-      pSuit = "C";
-      playerSuit = Clubs
-    } else if (Hearts.includes(playerCard)) {
-      pSuit = "H";
-      playerSuit = Hearts
-    } else if (Diamonds.includes(playerCard)) {
-      pSuit = "D";
-      playerSuit = Diamonds
-    }
+  // Establish GAMMA Suit
+  const gCardInfo = determineSuit(cpuCard);
+  var gSuit = gCardInfo.cSuit; // Output: "S"
+  var gammaSuit = gCardInfo.cpuSuit; // Output: "Spades"
 
+  // Establish DELTA Suit
+  const dCardInfo = determineSuit(cpuCard);
+  var dSuit = dCardInfo.cSuit; // Output: "S"
+  var deltaSuit = dCardInfo.cpuSuit; // Output: "Spades"
 
 
 
 
     ///////////////////winning or losing the trick
     var pIndex = playerSuit.indexOf(playerCard)
+
+    var eIndex = epsilonSuit.indexOf(eCard)
+    var tIndex = thetaSuit.indexOf(tCard)
     var cIndex = cpuSuit.indexOf(cpuCard)
-    var tIndex = trumpSuit.indexOf(trumpCard)
+    var gIndex = gammaSuit.indexOf(gCard)
+    var dIndex = deltaSuit.indexOf(dCard)
+
+    ///////  have the cards     cpuCard, eCard = ("8s")      have the tSuit = ("s"),        have the   lead    person,  have the index of each player  7. /////////////////
+ 
 
     if (pSuit === tSuit && cSuit !== tSuit){
       trump = false
@@ -485,6 +551,42 @@ function playRound(bid) {
     }
 
 }
+
+function determineSuit(cpuCard) {
+  let cSuit;
+  let cpuSuit;
+
+  if (Spades.includes(cpuCard)) {
+    cSuit = "s";
+    cpuSuit = "Spades";
+  } else if (Clubs.includes(cpuCard)) {
+    cSuit = "c";
+    cpuSuit = "Clubs";
+  } else if (Hearts.includes(cpuCard)) {
+    cSuit = "h";
+    cpuSuit = "Hearts";
+  } else if (Diamonds.includes(cpuCard)) {
+    cSuit = "d";
+    cpuSuit = "Diamonds";
+  } else {
+    // Handle the case when cpuCard is not found in any suit
+    console.error("Invalid card:", cpuCard);
+    return null; // or throw an error, depending on your needs
+  }
+
+  return { cSuit, cpuSuit };
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function winScore(bid) {
   if (bid === 1){
