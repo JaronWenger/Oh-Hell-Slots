@@ -430,15 +430,17 @@ function playRound(bid) {
   const gCard = shuffledDeck[6];
   const dCard = shuffledDeck[7];
 
+  const cards = [playerCard, eCard, tCard, cpuCard, gCard, dCard];
+
 
   // Establish player Suit
   const pCardInfo = determineSuit(cpuCard);
-  var pSuit = cardInfo.cSuit; // Output: "S"
-  var playerSuit = cardInfo.cpuSuit; // Output: "Spades"
+  var pSuit = pCardInfo.cSuit; // Output: "S"
+  var playerSuit = pCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish trump Suit
   const tCardInfo = determineSuit(cpuCard);
-  var tSuit = tCardInfo.cSuit; // Output: "S"
+  var trumSuit = tCardInfo.cSuit; // Output: "S"
   var trumpSuit = tCardInfo.cpuSuit; // Output: "Spades"
 
   // Establish EPSILON Suit
@@ -478,77 +480,59 @@ function playRound(bid) {
     var gIndex = gammaSuit.indexOf(gCard)
     var dIndex = deltaSuit.indexOf(dCard)
 
-    ///////  have the cards     cpuCard, eCard = ("8s")      have the tSuit = ("s"),        have the   lead    person,  have the index of each player  7. /////////////////
+    const cardIndexes = [pIndex, eIndex, tIndex, cIndex, gIndex, dIndex];
+
+    ///////  have the cards = ["8s", "2h", "3d", "As", "7h", 3s]     cpuCard, eCard = ("8s")      have the tSuit = ("s"),        have the   lead    person,  have the index of each player  7. /////////////////
  
+    const trumpCardPositions = [];
 
-    if (pSuit === tSuit && cSuit !== tSuit){
-      trump = false
-      ///player wins hand
-      winScore(bid)
-      cpuBetOnPlayerOnesTurn(cIndex)
-      cpuLoseScore(cIndex)
-
-    } else if (pSuit === tSuit && cSuit === tSuit) {
-      trump = true
-      if (pIndex > cIndex){
-        ///player wins hand
-        winScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuLoseScore(cIndex)
-      } else {
-        ///computer wins hand
-        loseScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuWinScore(cIndex)
-      }
+    for (let i = 0; i < cards.length; i++) {
+      const currentCard = cards[i];
+      const currentSuit = currentCard.charAt(currentCard.length - 1).toLowerCase(); // Extract the suit and convert to lowercase
+      console.log(currentSuit)
     
-
-    } else if (pSuit !== tSuit && cSuit === tSuit){
-      trump = true
-      ///computer wins hand
-      loseScore(bid)
-      cpuBetOnPlayerOnesTurn(cIndex)
-      cpuWinScore(cIndex)
-
-    } else if (playerOnesTurn && pSuit !== cSuit){
-      trump = false
-      ///Player wins hand
-      winScore(bid)
-      cpuBetOnPlayerOnesTurn(cIndex)
-      cpuLoseScore(cIndex)
-    } else if (!playerOnesTurn && pSuit !== cSuit){
-      trump = false
-      ///computer wins hand
-      loseScore(bid)
-      cpuBetOnPlayerOnesTurn(cIndex)
-      cpuWinScore(cIndex)
-    } else if (playerOnesTurn && pSuit === cSuit){
-      trump = false
-      if (pIndex > cIndex){
-        ///player wins hand
-        winScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuLoseScore(cIndex)
-      }else{
-        ///computer wins hand
-        loseScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuWinScore(cIndex)
-      }
-    } else if (!playerOnesTurn && pSuit === cSuit){
-      trump = false
-      if (pIndex > cIndex){
-        ///player wins hand
-        winScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuLoseScore(cIndex)
-      } else {
-        ///computer wins hand
-        loseScore(bid)
-        cpuBetOnPlayerOnesTurn(cIndex)
-        cpuWinScore(cIndex)
+      if (currentSuit === trumSuit) {
+        trumpCardPositions.push(i);
       }
     }
+
+    console.log(trumpCardPositions)
+    if (trumpCardPositions.length > 0) {
+      console.log(trumpCardPositions);
+
+      const indexOfMaxValue = trumpCardPositions.reduce((maxIndex, currentIndex) => (cardIndexes[currentIndex] > cardIndexes[maxIndex] ? currentIndex : maxIndex), 0);
+
+
+      console.log(indexOfMaxValue)
+
+    if (winner === 0){
+      //player 1 wins
+    } else if (winner === 1 ) {
+      //EPSILON wins
+    } else if (winner === 2 ) {
+      //THETA wins
+    } else if (winner === 3 ) {
+      //BETA wins
+    } else if (winner === 4 ) {
+      //GAMMA wins
+    } else if (winner === 5 ) {
+      //DELTA wins
+    }
+
+
+
+
+
+
+
+
+
+
+
+    } else {
+      console.log("No trump cards found in the array.");
+    }
+
 
 }
 
