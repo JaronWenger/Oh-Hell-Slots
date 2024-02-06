@@ -497,26 +497,17 @@ function playRound(bid) {
     }
 
     if (trumpCardPositions.length > 0) {
-      console.log(trumpCardPositions);
-      console.log(cardIndexes)
+
    
       const selectedCardValues = trumpCardPositions.map(index => cardIndexes[index]);
       const maxCardValue = Math.max(...selectedCardValues);
       const indexOfMaxValue = selectedCardValues.indexOf(maxCardValue);
 
-      console.log("selectedCardValues:", selectedCardValues);
-      console.log("Max Card Value:", maxCardValue);
-      console.log("Index of Max Value:", indexOfMaxValue);
-      console.log("Index of the greatest number:", trumpCardPositions[indexOfMaxValue]);
-
-      console.log(trumpCardPositions[indexOfMaxValue])
-
-      winner = trumpCardPositions[indexOfMaxValue]
 
 
 
+      var winner = trumpCardPositions[indexOfMaxValue]
 
-      
     if (winner === 0){
       console.log("ALPHA wins")
     } else if (winner === 1 ) {
@@ -531,19 +522,36 @@ function playRound(bid) {
       console.log("DELTA wins")
     }
 
+    ///////////////////////////////////hold cpu bets//////////////////////////
+    var remaining = [1,2,3,4,5];
 
+    if (lead === 0){
+      remaining = [1,2,3,4,5];
+    } else if (lead === 1) {
+      remaining = [];
+    } else if (lead === 2) {
+      remaining = [1];
+    } else if (lead === 3) {
+      remaining = [1,2];
+    } else if (lead === 4) {
+      remaining = [1,2,3];
+    } else if (lead === 5) {
+      remaining = [1,2,3,4];
+    }
 
-
-
-
-
-
-
-
-
+    let newCardIndexes = cardIndexes.filter((element, index) => remaining.includes(index));
+    console.log(remaining)
+    console.log(newCardIndexes)
+    function multiplyByFactorInPlace(array, specificIndexes) {
+      for (let i = 0; i < array.length; i++) {
+        cpuBetOnPlayerOnesTurn(array[i],specificIndexes[i], trumSuit, cards[i+1], winner)
+      }
+    }
+    multiplyByFactorInPlace(remaining, newCardIndexes);
+/////////////////////////////////////////////////////////////////////
     } else {
       
-      console.log("No trump cards found in the array.");
+
 
 
       const leadCardPositions = [];
@@ -562,7 +570,7 @@ function playRound(bid) {
       } else if (lead === 5){
         leader = dSuit
       }
-      console.log(leader)
+
 
       for (let i = 0; i < cards.length; i++) {
         const currentCard = cards[i];
@@ -573,7 +581,6 @@ function playRound(bid) {
         }
       }
 
-
       if (leadCardPositions.length > 0) {
         console.log(leadCardPositions);
         console.log(cardIndexes)
@@ -582,19 +589,12 @@ function playRound(bid) {
         const maxCardValue = Math.max(...selectedCardValues);
         const indexOfMaxValue = selectedCardValues.indexOf(maxCardValue);
   
-        console.log("selectedCardValues:", selectedCardValues);
-        console.log("Max Card Value:", maxCardValue);
-        console.log("Index of Max Value:", indexOfMaxValue);
-        console.log("Index of the greatest number:", leadCardPositions[indexOfMaxValue]);
+
   
         console.log(leadCardPositions[indexOfMaxValue])
   
-        winner = leadCardPositions[indexOfMaxValue]
+        var winner = leadCardPositions[indexOfMaxValue]
   
-  
-  
-  
-        
       if (winner === 0){
         console.log("ALPHA wins")
       } else if (winner === 1 ) {
@@ -609,16 +609,45 @@ function playRound(bid) {
         console.log("DELTA wins")
       }
 
+    ///////////////////////////////////hold cpu bets//////////////////////////
+    var remaining = [1,2,3,4,5];
 
-
-
-
-
-
+    if (lead === 0){
+      remaining = [1,2,3,4,5];
+    } else if (lead === 1) {
+      remaining = [];
+    } else if (lead === 2) {
+      remaining = [1];
+    } else if (lead === 3) {
+      remaining = [1,2];
+    } else if (lead === 4) {
+      remaining = [1,2,3];
+    } else if (lead === 5) {
+      remaining = [1,2,3,4];
     }
 
+    let newCardIndexes = cardIndexes.filter((element, index) => remaining.includes(index));
+
+
+    console.log(remaining)
+    console.log(newCardIndexes)
+    
+
+    function multiplyByFactorInPlace(array, specificIndexes) {
+      for (let i = 0; i < array.length; i++) {
+        (function (index) {
+        cpuBetOnPlayerOnesTurn(array[i],specificIndexes[i], trumSuit, cards[i+1], winner)
+      })(i);
+      }
+    }
+    multiplyByFactorInPlace(remaining, newCardIndexes);
+
+    }
   }
 }
+
+
+
 
 function determineSuit(cpuCard) {
   let cSuit;
@@ -678,6 +707,11 @@ function loseScore(bid) {
     scoreHeading.innerHTML = ("A: " + points);
   }
 }
+
+
+
+
+
 ///////////////////////////////////////////////////cpu bid when not leading////////////////////////////////////
 function cpuWinScore(cIndex) {
   if (cpuBidTracker === 1){
@@ -706,31 +740,70 @@ function cpuLoseScore(cIndex) {
 
 
 
-
-
-
-
-
-
-
-
-function cpuBetOnPlayerOnesTurn(cIndex){
+function cpuBetOnPlayerOnesTurn(cpuReveal, indexes, truSuit, cardSuit, winner){
+  const newCardSuit = cardSuit.replace(/[2-9]|10|J|Q|K|A/g, '').replace(/\..+$/, '');
+  console.log(cpuReveal, indexes, truSuit, newCardSuit, winner)
 ///////////////////////////playeronesTurn//////establish cpu bet////////
-var cpuBet = document.getElementById('cpuBid');
+if (cpuReveal === 1) {
+  var cpuBet = document.getElementById('eBid');
+  var cpuScoreHeading = document.getElementById("ePoints");
+  var score = ePoints
+  var preHTML = "E: "
+} else if (cpuReveal === 2) {
+  var cpuBet = document.getElementById('tBid');
+  var cpuScoreHeading = document.getElementById("tPoints");
+  var score = tPoints
+  var preHTML = "T: "
+} else if (cpuReveal === 3) {
+  var cpuBet = document.getElementById('cpuBid');
+  var cpuScoreHeading = document.getElementById("bPoints");
+  var score = cpuPoints
+  var preHTML = "B: "
+} else if (cpuReveal === 4) {
+  var cpuBet = document.getElementById('gBid');
+  var cpuScoreHeading = document.getElementById("gPoints");
+  var score = gPoints
+  var preHTML = "G: "
+} else if (cpuReveal === 5) {
+  var cpuBet = document.getElementById('dBid');
+  var cpuScoreHeading = document.getElementById("dPoints");
+  var score = dPoints
+  var preHTML = "D: "
+}
 
-if (playerOnesTurn && trump){
-  cpuBidTracker = 1
+
+
+if (truSuit === newCardSuit) {
   cpuBet.innerHTML = "1";
   cpuBet.style.opacity = "100%";
-} else if (playerOnesTurn && !trump){
-  if (cIndex > 10){
-    cpuBidTracker = 0
-    cpuBet.innerHTML = "0";
-    cpuBet.style.opacity = "100%";
+  if (cpuReveal === winner){
+    score = score + 11
+    cpuScoreHeading.innerHTML = (preHTML + score);
   } else {
-    cpuBidTracker = 0
+    score = score - 1
+    cpuScoreHeading.innerHTML = (preHTML + score);
+  }
+} else if (truSuit !== newCardSuit) {
+  if (indexes > 11){
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+    if (cpuReveal === winner){
+      score = score + 11
+      cpuScoreHeading.innerHTML = (preHTML + score);
+    } else {
+      score = score - 1
+      cpuScoreHeading.innerHTML = (preHTML + score);
+    }
+  } else {
     cpuBet.innerHTML = "0";
     cpuBet.style.opacity = "100%";
+    if (cpuReveal === winner){
+      score = score - 1
+      cpuScoreHeading.innerHTML = (preHTML + score);
+    } else {
+      score = score + 10
+      cpuScoreHeading.innerHTML = (preHTML + score);
+    }
   }
 }
 
@@ -738,3 +811,23 @@ if (playerOnesTurn && trump){
 
 
 
+function cpuBetOnPlayerOnesTurnLeading(cIndex){
+  ///////////////////////////playeronesTurn//////establish cpu bet////////
+  var cpuBet = document.getElementById('cpuBid');
+  
+  if (playerOnesTurn && trump){
+    cpuBidTracker = 1
+    cpuBet.innerHTML = "1";
+    cpuBet.style.opacity = "100%";
+  } else if (playerOnesTurn && !trump){
+    if (cIndex > 10){
+      cpuBidTracker = 1
+      cpuBet.innerHTML = "1";
+      cpuBet.style.opacity = "100%";
+    } else {
+      cpuBidTracker = 0
+      cpuBet.innerHTML = "0";
+      cpuBet.style.opacity = "100%";
+    }
+  }
+  }
