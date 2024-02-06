@@ -6,6 +6,12 @@ var cpuPoints = 0;
 var gPoints = 0;
 var dPoints = 0;
 
+var eB
+var tB
+var bB
+var gB
+var dB
+
 var cpuBidTracker = 0;
 var trump = false;
 var playerOnesTurn = false;
@@ -64,6 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
 /////////////////////TRUMP CARD PRESSED/////////////////////////
 /////////////////////TRUMP CARD PRESSED/////////////////////////
 function shuffleHands() {
+
+  eB = 0
+  tB = 0
+  bB = 0
+  gB = 0
+  dB = 0
+
 
   round++
 
@@ -310,6 +323,7 @@ function cpuBet(num, computerBid) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////      COMPUTER BID STRATEGY         /////////////////////////////////////////////////////////////////////////////////
   // Does the computer have trump?
+
   var cpuBet = document.getElementById(computerBid);
   const index = suit.indexOf(cCard);
 
@@ -320,11 +334,13 @@ function cpuBet(num, computerBid) {
       cpuBet.innerHTML = "1";
       cpuBet.style.opacity = "100%";
       cpuBidTracker = 1
+      zed(num, 1)
     }else{
-////Bid 0      
+////Bid 1     
       cpuBet.innerHTML = "1";
       cpuBet.style.opacity = "100%";
       cpuBidTracker = 1
+      zed(num, 1)
     }
 
   } else {
@@ -334,11 +350,13 @@ function cpuBet(num, computerBid) {
             cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
             cpuBidTracker = 1
+            zed(num, 1)
           }else{
       ////Bid 0      
             cpuBet.innerHTML = "0";
             cpuBet.style.opacity = "100%";
             cpuBidTracker = 1
+            zed(num, 0)
           }
   }
 }
@@ -510,16 +528,65 @@ function playRound(bid) {
 
     if (winner === 0){
       console.log("ALPHA wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points + 11
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
+
     } else if (winner === 1 ) {
       console.log("epsilon wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points + 10
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
     } else if (winner === 2 ) {
       console.log("Theta wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points + 10
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
     } else if (winner === 3 ) {
       console.log("Beta wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points + 10
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
     } else if (winner === 4 ) {
       console.log("Gamma wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points + 10
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
     } else if (winner === 5 ) {
       console.log("DELTA wins")
+      var playerOneHeading = document.getElementById("points");
+      if (bid === 1) {
+        points = points - 1
+        playerOneHeading.innerHTML = ("A: " + points)
+      } else {
+        points = points + 10
+        playerOneHeading.innerHTML = ("A: " + points)
+      }
     }
 
     ///////////////////////////////////hold cpu bets//////////////////////////
@@ -539,9 +606,30 @@ function playRound(bid) {
       remaining = [1,2,3,4];
     }
 
+    //////---------------------------------------------------------------------------------
+
+    var tally = [1,2,3,4,5].filter((element, index) => !remaining.includes(element));
+
+    console.log("remain" + remaining)
+    console.log("tally" + tally)
+
+
+    function multiplyByFactorInPlaceTwo(array) {
+      for (let i = 0; i < array.length; i++) {
+        shownTally(tally[i], winner)
+      }
+    }
+    multiplyByFactorInPlaceTwo(tally);
+
+    //////---------------------------------------------------------------------------------
+
+
+
+
+
+
     let newCardIndexes = cardIndexes.filter((element, index) => remaining.includes(index));
-    console.log(remaining)
-    console.log(newCardIndexes)
+
     function multiplyByFactorInPlace(array, specificIndexes) {
       for (let i = 0; i < array.length; i++) {
         cpuBetOnPlayerOnesTurn(array[i],specificIndexes[i], trumSuit, cards[i+1], winner)
@@ -582,8 +670,7 @@ function playRound(bid) {
       }
 
       if (leadCardPositions.length > 0) {
-        console.log(leadCardPositions);
-        console.log(cardIndexes)
+ 
      
         const selectedCardValues = leadCardPositions.map(index => cardIndexes[index]);
         const maxCardValue = Math.max(...selectedCardValues);
@@ -591,23 +678,72 @@ function playRound(bid) {
   
 
   
-        console.log(leadCardPositions[indexOfMaxValue])
+
   
         var winner = leadCardPositions[indexOfMaxValue]
   
-      if (winner === 0){
-        console.log("ALPHA wins")
-      } else if (winner === 1 ) {
-        console.log("epsilon wins")
-      } else if (winner === 2 ) {
-        console.log("Theta wins")
-      } else if (winner === 3 ) {
-        console.log("Beta wins")
-      } else if (winner === 4 ) {
-        console.log("Gamma wins")
-      } else if (winner === 5 ) {
-        console.log("DELTA wins")
-      }
+        if (winner === 0){
+          console.log("ALPHA wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points + 11
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+    
+        } else if (winner === 1 ) {
+          console.log("epsilon wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points + 10
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+        } else if (winner === 2 ) {
+          console.log("Theta wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points + 10
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+        } else if (winner === 3 ) {
+          console.log("Beta wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points + 10
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+        } else if (winner === 4 ) {
+          console.log("Gamma wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points + 10
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+        } else if (winner === 5 ) {
+          console.log("DELTA wins")
+          var playerOneHeading = document.getElementById("points");
+          if (bid === 1) {
+            points = points - 1
+            playerOneHeading.innerHTML = ("A: " + points)
+          } else {
+            points = points + 10
+            playerOneHeading.innerHTML = ("A: " + points)
+          }
+        }
 
     ///////////////////////////////////hold cpu bets//////////////////////////
     var remaining = [1,2,3,4,5];
@@ -626,11 +762,31 @@ function playRound(bid) {
       remaining = [1,2,3,4];
     }
 
+//////---------------------------------------------------------------------------------
+
+    var tally = [1,2,3,4,5].filter((element, index) => !remaining.includes(element));
+
+
+    function multiplyByFactorInPlaceTwo(array) {
+      for (let i = 0; i < array.length; i++) {
+        shownTally(tally[i], winner)
+      }
+    }
+    multiplyByFactorInPlaceTwo(tally);
+
+
+//////---------------------------------------------------------------------------------
+
+
+
+
+
+
+
     let newCardIndexes = cardIndexes.filter((element, index) => remaining.includes(index));
 
 
-    console.log(remaining)
-    console.log(newCardIndexes)
+
     
 
     function multiplyByFactorInPlace(array, specificIndexes) {
@@ -739,10 +895,20 @@ function cpuLoseScore(cIndex) {
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function cpuBetOnPlayerOnesTurn(cpuReveal, indexes, truSuit, cardSuit, winner){
   const newCardSuit = cardSuit.replace(/[2-9]|10|J|Q|K|A/g, '').replace(/\..+$/, '');
-  console.log(cpuReveal, indexes, truSuit, newCardSuit, winner)
+
 ///////////////////////////playeronesTurn//////establish cpu bet////////
 if (cpuReveal === 1) {
   var cpuBet = document.getElementById('eBid');
@@ -811,23 +977,134 @@ if (truSuit === newCardSuit) {
 
 
 
-function cpuBetOnPlayerOnesTurnLeading(cIndex){
-  ///////////////////////////playeronesTurn//////establish cpu bet////////
-  var cpuBet = document.getElementById('cpuBid');
-  
-  if (playerOnesTurn && trump){
-    cpuBidTracker = 1
-    cpuBet.innerHTML = "1";
-    cpuBet.style.opacity = "100%";
-  } else if (playerOnesTurn && !trump){
-    if (cIndex > 10){
-      cpuBidTracker = 1
-      cpuBet.innerHTML = "1";
-      cpuBet.style.opacity = "100%";
+
+function shownTally(numRemain, winner) {
+
+  if (numRemain === 1) {
+    var cpuScoreHeading = document.getElementById("ePoints");
+    if (numRemain === winner) {
+      if (eB === 1) {
+        ePoints = ePoints + 11
+        cpuScoreHeading.innerHTML = ("E: " + ePoints)
+      } else if (eB === 0) {
+        ePoints = ePoints - 1
+        cpuScoreHeading.innerHTML = ("E: " + ePoints)
+      }
     } else {
-      cpuBidTracker = 0
-      cpuBet.innerHTML = "0";
-      cpuBet.style.opacity = "100%";
+      if (eB === 1) {
+        ePoints = ePoints - 1
+        cpuScoreHeading.innerHTML = ("E: " + ePoints)
+      } else if (eB === 0) {
+        ePoints = ePoints + 10
+        cpuScoreHeading.innerHTML = ("E: " + ePoints)
+      }
     }
+  } else if (numRemain === 2) {
+    var cpuScoreHeading = document.getElementById("tPoints");
+    if (numRemain === winner) {
+      if (tB === 1) {
+        tPoints = tPoints + 11
+        cpuScoreHeading.innerHTML = ("T: " + tPoints)
+      } else if (tB === 0) {
+        tPoints = tPoints - 1
+        cpuScoreHeading.innerHTML = ("T: " + tPoints)
+      }
+    } else {
+      if (tB === 1) {
+        tPoints = tPoints - 1
+        cpuScoreHeading.innerHTML = ("T: " + tPoints)
+      } else if (tB === 0) {
+        tPoints = tPoints + 10
+        cpuScoreHeading.innerHTML = ("T: " + tPoints)
+      }
+    }
+  } else if (numRemain === 3) {
+    var cpuScoreHeading = document.getElementById("bPoints");
+    if (numRemain === winner) {
+      if (bB === 1) {
+        cpuPoints = cpuPoints + 11
+        cpuScoreHeading.innerHTML = ("B: " + cpuPoints)
+      } else if (bB === 0) {
+        cpuPoints = cpuPoints - 1
+        cpuScoreHeading.innerHTML = ("B: " + cpuPoints)
+      }
+    } else {
+      if (bB === 1) {
+        cpuPoints = cpuPoints - 1
+        cpuScoreHeading.innerHTML = ("B: " + cpuPoints)
+      } else if (bB === 0) {
+        cpuPoints = cpuPoints + 10
+        cpuScoreHeading.innerHTML = ("B: " + cpuPoints)
+      }
+    }
+  } else if (numRemain === 4) {
+    var cpuScoreHeading = document.getElementById("gPoints");
+    if (numRemain === winner) {
+      if (gB === 1) {
+        gPoints = gPoints + 11
+        cpuScoreHeading.innerHTML = ("G: " + gPoints)
+      } else if (gB === 0) {
+        gPoints = gPoints - 1
+        cpuScoreHeading.innerHTML = ("G: " + gPoints)
+      }
+    } else {
+      if (gB === 1) {
+        gPoints = gPoints - 1
+        cpuScoreHeading.innerHTML = ("G: " + gPoints)
+      } else if (gB === 0) {
+        gPoints = gPoints + 10
+        cpuScoreHeading.innerHTML = ("G: " + gPoints)
+      }
+    }
+  } else if (numRemain === 5) {
+    var cpuScoreHeading = document.getElementById("dPoints");
+    if (numRemain === winner) {
+      if (dB === 1) {
+        dPoints = dPoints + 11
+        cpuScoreHeading.innerHTML = ("D: " + dPoints)
+      } else if (dB === 0) {
+        dPoints = dPoints - 1
+        cpuScoreHeading.innerHTML = ("D: " + dPoints)
+      }
+    } else {
+      if (dB === 1) {
+        dPoints = dPoints - 1
+        cpuScoreHeading.innerHTML = ("D: " + dPoints)
+      } else if (dB === 0) {
+        dPoints = dPoints + 10
+        cpuScoreHeading.innerHTML = ("D: " + dPoints)
+      }
+    
+    }
+    console.log("dPoints " + dPoints)
   }
+
+
+}
+
+
+
+function zed (num, bid) {
+
+
+  newNum = num - 2
+
+  if (newNum === 1) {
+    eB = bid
+  } else if (newNum === 2) {
+    tB = bid
+  } else if (newNum === 3) {
+    bB = bid
+  } else if (newNum === 4) {
+    gB = bid
+  } else if (newNum === 5) {
+    dB = bid
   }
+  console.log(eB,tB,bB,gB,dB)
+}
+
+function fin(pointVar) {
+  if (pointVar === ePoints){
+    ePoints
+  }
+}
