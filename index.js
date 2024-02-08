@@ -939,15 +939,18 @@ if (cpuReveal === 1) {
 
 
 
+
 if (truSuit === newCardSuit) {
   cpuBet.innerHTML = "1";
   cpuBet.style.opacity = "100%";
   if (cpuReveal === winner){
     score = score + 11
     cpuScoreHeading.innerHTML = (preHTML + score);
+    kleveland(11, cpuReveal)
   } else {
     score = score - 1
     cpuScoreHeading.innerHTML = (preHTML + score);
+    kleveland(-1, cpuReveal)
   }
 } else if (truSuit !== newCardSuit) {
   if (indexes > 11){
@@ -956,9 +959,11 @@ if (truSuit === newCardSuit) {
     if (cpuReveal === winner){
       score = score + 11
       cpuScoreHeading.innerHTML = (preHTML + score);
+      kleveland(11, cpuReveal)
     } else {
       score = score - 1
       cpuScoreHeading.innerHTML = (preHTML + score);
+      kleveland(-1, cpuReveal)
     }
   } else {
     cpuBet.innerHTML = "0";
@@ -966,12 +971,35 @@ if (truSuit === newCardSuit) {
     if (cpuReveal === winner){
       score = score - 1
       cpuScoreHeading.innerHTML = (preHTML + score);
+      kleveland(-1, cpuReveal)
     } else {
       score = score + 10
       cpuScoreHeading.innerHTML = (preHTML + score);
+      kleveland(10, cpuReveal)
     }
   }
 }
+
+
+function kleveland(change, seat) {
+  if (seat === 1) {
+    ePoints = ePoints + change
+  } else if (seat === 2) {
+    tPoints = tPoints + change
+  } else if (seat === 3) {
+    cpuPoints = cpuPoints + change
+  } else if (seat === 4) {
+    gPoints = gPoints + change
+  } else if (seat === 5) {
+    dPoints = dPoints + change
+  }
+} 
+
+
+
+
+
+
 
 }
 
