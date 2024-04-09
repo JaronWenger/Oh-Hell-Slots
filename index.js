@@ -345,7 +345,7 @@ function cpuBet(num, computerBid) {
 
   } else {
     trump = false
-    if (index > 11){
+    if (index > 10){
       /////Bid 1
             cpuBet.innerHTML = "1";
             cpuBet.style.opacity = "100%";
