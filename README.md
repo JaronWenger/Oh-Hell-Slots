@@ -1,6 +1,6 @@
 # UP-AND-DOWN-THE-RIVER
 
-This web app sets you agaisnt 5 computer players in the card game Up and Down the River.  Each player gets delt one card and bids on their chances of winning the hand.  Same rules as Oh Hell card game.  Click on the center deck to deal the next round.
+This web app sets you agaisnt 5 computer players in the card game Up and Down the River.  Each player gets delt one card and bids on their chances of winning the hand.  Same rules as Oh Hell card game.  Click on the center deck to deal the next round.  The green circle indicates who starts the round.
 
 Below is the link to this project.
 
